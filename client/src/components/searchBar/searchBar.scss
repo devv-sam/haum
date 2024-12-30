@@ -1,5 +1,3 @@
-@import "../../responsive.scss";
-
 .searchBar {
   .type {
     button {
@@ -33,41 +31,10 @@
     height: 64px;
     gap: 5px;
 
-    @include sm {
-      flex-direction: column;
-      border: none;
-    }
-
     input {
       border: none;
       padding: 0px 10px;
       width: 200px;
-
-      @include lg {
-        padding: 0px 5px;
-
-        &:nth-child(2),
-        &:nth-child(3) {
-          width: 140px;
-        }
-      }
-      @include md {
-        width: 200px;
-        &:nth-child(2),
-        &:nth-child(3) {
-          width: 200px;
-        }
-      }
-
-      @include sm {
-        width: auto;
-        &:nth-child(2),
-        &:nth-child(3) {
-          width: auto;
-        }
-        padding: 20px;
-        border: 1px solid #999;
-      }
     }
     a {
       flex: 1;
@@ -80,10 +47,6 @@
         border: none;
         cursor: pointer;
         background-color: #fece51;
-
-        @include sm {
-          padding: 10px;
-        }
 
         img {
           width: 24px;

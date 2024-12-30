@@ -1,5 +1,3 @@
-@import "../../responsive.scss";
-
 .listPage {
   display: flex;
   height: 100%;
@@ -8,7 +6,7 @@
     flex: 3;
     height: 100%;
 
-    .wrapper{
+    .wrapper {
       height: 100%;
       padding-right: 50px;
       display: flex;
@@ -22,9 +20,5 @@
     flex: 2;
     height: 100%;
     background-color: #fcf5f3;
-
-    @include md{
-      display: none;
-    }
   }
 }

@@ -10,9 +10,9 @@ function Layout() {
       <div className="navbar">
         <Navbar />
       </div>
-      <div className="content">
+      {/* <div className="content">
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 }

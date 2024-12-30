@@ -1,5 +1,5 @@
 {
-  "name": "estateui",
+  "name": "haum",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -18,10 +18,7 @@
     "react-leaflet": "^4.2.1",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.2",
-    "sass": "^1.71.1",
-    "socket.io-client": "^4.8.1",
-    "timeago.js": "^4.0.2",
-    "zustand": "^5.0.2"
+    "sass": "^1.71.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

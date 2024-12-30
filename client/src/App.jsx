@@ -1,3 +1,4 @@
+import "./style.css";
 import HomePage from "./routes/homePage/homePage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ListPage from "./routes/listPage/listPage";
@@ -13,7 +14,6 @@ import {
   profilePageLoader,
   singlePageLoader,
 } from "./lib/loaders";
-
 function App() {
   const router = createBrowserRouter([
     {
