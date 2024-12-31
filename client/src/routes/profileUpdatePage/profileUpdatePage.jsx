@@ -9,7 +9,6 @@ function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [avatar, setAvatar] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -22,6 +21,9 @@ function ProfileUpdatePage() {
     const formData = new FormData(e.target);
     const updates = Object.fromEntries(formData);
 
+    // Concatenate first and last names
+    const fullName = `${updates.fname} ${updates.lname}`;
+
     // Only include fields that have been filled out
     const cleanedUpdates = Object.entries(updates).reduce(
       (acc, [key, value]) => {
@@ -30,7 +32,7 @@ function ProfileUpdatePage() {
         }
         return acc;
       },
-      { avatar: avatar[0] }
+      { name: fullName, avatar: avatar[0] }
     );
 
     try {
@@ -72,6 +74,23 @@ function ProfileUpdatePage() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Update Profile</h1>
+          <div className="item">
+            <label htmlFor="name">Name</label>
+            <div className="flex">
+              <input
+                id="fname"
+                name="fname"
+                type="text"
+                defaultValue={currentUser.fname}
+              />
+              <input
+                id="lname"
+                name="lname"
+                type="text"
+                defaultValue={currentUser.lname}
+              />
+            </div>
+          </div>
           <div className="item">
             <label htmlFor="username">Username</label>
             <input

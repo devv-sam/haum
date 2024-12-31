@@ -3,23 +3,23 @@ import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fname, lname, name, username, email, password } = req.body;
 
   try {
     // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
-    console.log(hashPassword);
-
     // Save the user to db
     const newUser = await prisma.user.create({
       data: {
+        fname,
+        lname,
+        name,
         username,
         email,
         password: hashPassword,
       },
     });
-    console.log(newUser);
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.log(res.status(500).json({ message: "Failed to create user" }));
