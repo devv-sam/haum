@@ -1,40 +1,37 @@
 import SearchBar from "../../components/searchBar/SearchBar";
-// import { AuthContext } from "../../context/AuthContext";
-// import { useContext } from "react";
-import "../../style.css";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 function HomePage() {
-  // const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+
   return (
-    <div className="homePage">
-      <div className="textContainer">
-        <div className="wrapper">
-          <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-            explicabo suscipit cum eius, iure est nulla animi consequatur
-            facilis id pariatur fugit quos laudantium temporibus dolor ea
-            repellat provident impedit!
-          </p>
-          <SearchBar />
-          <div className="boxes">
-            <div className="box">
-              <h1>16+</h1>
-              <h2>Years of Experience</h2>
-            </div>
-            <div className="box">
-              <h1>200</h1>
-              <h2>Award Gained</h2>
-            </div>
-            <div className="box">
-              <h1>2000+</h1>
-              <h2>Property Ready</h2>
-            </div>
+    <div className="min-h-screen bg-gray-50">
+      <div className=" px-4 md:px-8 sm:px-6 lg:px-8 pt-20 pb-32">
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-['Mona_Sans'] font-medium leading-tight mb-8">
+              Real Estate, Reinvented: Powered by Blockchain
+            </h1>
+          </div>
+          <div>
+            <p className="text-lg md:text-xl text-gray-600 font-['Mona_Sans']">
+              Haum is a blockchain-powered platform that enables the buying,
+              selling, and fractional ownership of tokenized real estate.
+            </p>
           </div>
         </div>
-      </div>
-      <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+
+        <div className="relative">
+          <img
+            src="/modern-houses.png"
+            alt="Modern Houses"
+            className="w-full h-[500px] object-cover rounded-3xl mb-8"
+          />
+          <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 w-[90%]">
+            <SearchBar />
+          </div>
+        </div>
       </div>
     </div>
   );

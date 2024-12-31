@@ -1,129 +1,134 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import "../../style.css";
+import { AuthContext } from "../../context/AuthContext";
+import { X } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState("");
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (isOpen) {
-      gsap.to(".mobile-menu", {
-        x: "0%",
-        duration: 0.6,
+      gsap.to(".menu-overlay", {
+        opacity: 1,
+        visibility: "visible",
+        duration: 0.4,
+        ease: "power3.out",
+      });
+      gsap.to(".menu-content", {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
         ease: "power3.out",
       });
     } else {
-      gsap.to(".mobile-menu", {
-        x: "100%",
-        duration: 0.6,
+      gsap.to(".menu-overlay", {
+        opacity: 0,
+        visibility: "hidden",
+        duration: 0.4,
         ease: "power3.out",
+      });
+      gsap.to(".menu-content", {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        ease: "power3.in",
       });
     }
   }, [isOpen]);
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Properties", path: "/list" },
+    { name: "Marketplace", path: "/list" },
+    { name: "How It Works", path: "/how-it-works" },
+    { name: "About Us", path: "/about" },
   ];
-
-  // Mobile navigation links (including Profile)
-  const mobileNavLinks = [
-    { name: "Home", path: "/" },
-    { name: "Properties", path: "/list" },
-    { name: "Profile", path: "/register" },
-  ];
-
-  const getPageTitle = () => {
-    const currentLink = mobileNavLinks.find(
-      (link) => link.path === currentPath
-    );
-    return currentLink ? currentLink.name : "Haum";
-  };
 
   return (
-    <nav className="h-24 px-8 flex items-center justify-between bg-white relative">
-      {/* Logo - Left on desktop */}
-      <Link to="/" className="flex items-center gap-3">
-        <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
+    <nav className="h-24 px-4 md:px-8 flex items-center justify-between bg-white relative">
+      <Link to="/" className="flex items-center gap-3 z-30">
+        <img src="/logo.svg" alt="Logo" className="w-12 h-12 md:w-16 md:h-16" />
       </Link>
-
-      <div className="md:hidden flex-1 text-center font-['Mona_Sans'] text-lg">
-        {getPageTitle()}
-      </div>
-
-      <div className="hidden md:flex items-center gap-8 font-['Mona_Sans']">
-        {/* Navigation Links */}
-        {navLinks.map((link) => (
-          <Link
-            key={link.path}
-            to={link.path}
-            className={`transition-all duration-300 ${
-              currentPath === link.path
-                ? "text-black font-medium"
-                : "text-black/60 hover:text-black"
-            }`}
-          >
-            {link.name}
-          </Link>
-        ))}
-        {/* Auth Buttons */}
-        <Link
-          to="/login"
-          className="text-black/80 hover:text-black transition-all duration-300 font-medium ml-4"
-        >
-          Login
-        </Link>
-        <Link
-          to="/register"
-          className="bg-black text-white px-6 py-2.5 rounded-full hover:bg-black/90 transition-all duration-300 font-medium"
-        >
-          Sign up
-        </Link>
-      </div>
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden z-50 w-6 h-6 flex flex-col justify-center gap-1.5 relative"
+        className="z-30 flex items-center gap-2 font-['Mona_Sans'] hover:opacity-70 transition-opacity"
       >
-        <span
-          className={`w-full h-0.5 bg-black transition-all duration-300 ${
-            isOpen ? "rotate-45 translate-y-2" : ""
-          }`}
-        />
-        <span
-          className={`w-full h-0.5 bg-black transition-all duration-300 ${
-            isOpen ? "opacity-0" : ""
-          }`}
-        />
-        <span
-          className={`w-full h-0.5 bg-black transition-all duration-300 ${
-            isOpen ? "-rotate-45 -translate-y-2" : ""
-          }`}
-        />
+        <span className="text-lg">•</span>
+        <span className="text-lg font-['Mona_Sans'] font-medium">Menu</span>
       </button>
 
-      {/* Mobile Menu */}
       <div
-        className={`mobile-menu fixed top-0 right-0 w-full h-screen bg-black transform translate-x-full
-          transition-transform duration-300 z-40`}
+        className={`menu-overlay fixed inset-0 flex items-center justify-center ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        } bg-white/10 backdrop-blur-md border border-white/20 z-50`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setIsOpen(false);
+        }}
       >
-        <div className="flex flex-col items-end justify-center h-full pr-12 gap-8">
-          {mobileNavLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
+        <div
+          className={`menu-content fixed w-full  md:w-[700px] md:h-auto md:rounded-2xl rounded-lg bg-black md:p-12 p-6 opacity-0 md:opacity-100 z-20`}
+        >
+          <div className="flex justify-between items-start mb-8">
+            <h2 className="text-white/60 font-['Mona_Sans'] md:text-xl text-lg">
+              Menu
+            </h2>
+            <button
               onClick={() => setIsOpen(false)}
-              className="font-['Mona_Sans'] text-white text-3xl font-medium hover:text-gray-300 transition-all duration-300"
+              className="text-white/60 hover:text-white"
             >
-              {link.name}
-            </Link>
-          ))}
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-6 mb-12">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium font-['Mona_Sans'] hover:text-white/80 transition-colors "
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+            <div className="flex flex-col gap-4">
+              <span className="text-white/60 font-light">Follow us</span>
+              <div className="flex gap-6">
+                {["Instagram", "Facebook", "Twitter"].map((social) => (
+                  <a
+                    key={social}
+                    href={`#${social.toLowerCase()}`}
+                    className="text-white hover:text-white/80 transition-colors"
+                  >
+                    {social}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {currentUser ? (
+              <Link
+                to="/profile"
+                onClick={() => setIsOpen(false)}
+                className="w-full md:w-auto bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-colors font-['Mona_Sans'] text-lg text-center"
+              >
+                Profile
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="w-full md:w-auto bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 font-['Mona_Sans'] transition-colors text-lg text-center"
+              >
+                Sign in
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>
