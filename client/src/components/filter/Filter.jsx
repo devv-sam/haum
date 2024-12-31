@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./filter.scss";
 import { useSearchParams } from "react-router-dom";
+import { Search, MapPin } from "lucide-react";
 
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,87 +25,101 @@ function Filter() {
   };
 
   return (
-    <div className="filter">
-      <h1>
-        Search results for <b>{searchParams.get("city")}</b>
-      </h1>
-      <div className="top">
-        <div className="item">
-          <label htmlFor="city">Location</label>
+    <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 mb-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-[mona_sans] text-gray-900">
+          {searchParams.get("city") ? (
+            <>
+              Search results for{" "}
+              <span className="font-semibold">{searchParams.get("city")}</span>
+            </>
+          ) : (
+            "Find your perfect home"
+          )}
+        </h1>
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-4 mb-4">
+        <div className="relative flex-grow">
+          <MapPin
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            size={20}
+          />
           <input
             type="text"
             id="city"
             name="city"
-            placeholder="City Location"
+            placeholder="Enter location"
             onChange={handleChange}
             defaultValue={query.city}
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans]"
           />
         </div>
       </div>
-      <div className="bottom">
-        <div className="item">
-          <label htmlFor="type">Type</label>
-          <select
-            name="type"
-            id="type"
-            onChange={handleChange}
-            defaultValue={query.type}
-          >
-            <option value="">any</option>
-            <option value="buy">Buy</option>
-            <option value="rent">Rent</option>
-          </select>
-        </div>
-        <div className="item">
-          <label htmlFor="property">Property</label>
-          <select
-            name="property"
-            id="property"
-            onChange={handleChange}
-            defaultValue={query.property}
-          >
-            <option value="">any</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="condo">Condo</option>
-            <option value="land">Land</option>
-          </select>
-        </div>
-        <div className="item">
-          <label htmlFor="minPrice">Min Price</label>
-          <input
-            type="number"
-            id="minPrice"
-            name="minPrice"
-            placeholder="any"
-            onChange={handleChange}
-            defaultValue={query.minPrice}
-          />
-        </div>
-        <div className="item">
-          <label htmlFor="maxPrice">Max Price</label>
-          <input
-            type="text"
-            id="maxPrice"
-            name="maxPrice"
-            placeholder="any"
-            onChange={handleChange}
-            defaultValue={query.maxPrice}
-          />
-        </div>
-        <div className="item">
-          <label htmlFor="bedroom">Bedroom</label>
-          <input
-            type="text"
-            id="bedroom"
-            name="bedroom"
-            placeholder="any"
-            onChange={handleChange}
-            defaultValue={query.bedroom}
-          />
-        </div>
-        <button onClick={handleFilter}>
-          <img src="/search.png" alt="" />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        <select
+          name="type"
+          id="type"
+          onChange={handleChange}
+          defaultValue={query.type}
+          className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans] bg-white"
+        >
+          <option value="">Any type</option>
+          <option value="invest">Invest</option>
+          <option value="rent">Rent</option>
+        </select>
+
+        <select
+          name="property"
+          id="property"
+          onChange={handleChange}
+          defaultValue={query.property}
+          className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans] bg-white"
+        >
+          <option value="">Any property</option>
+          <option value="apartment">Apartment</option>
+          <option value="house">House</option>
+          <option value="condo">Condo</option>
+          <option value="land">Land</option>
+        </select>
+
+        <input
+          type="number"
+          id="minPrice"
+          name="minPrice"
+          placeholder="Min price"
+          onChange={handleChange}
+          defaultValue={query.minPrice}
+          className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans]"
+        />
+
+        <input
+          type="number"
+          id="maxPrice"
+          name="maxPrice"
+          placeholder="Max price"
+          onChange={handleChange}
+          defaultValue={query.maxPrice}
+          className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans]"
+        />
+
+        <input
+          type="number"
+          id="bedroom"
+          name="bedroom"
+          placeholder="Bedrooms"
+          onChange={handleChange}
+          defaultValue={query.bedroom}
+          className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans]"
+        />
+
+        <button
+          onClick={handleFilter}
+          className="flex items-center justify-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-[mona_sans]"
+        >
+          <Search size={20} className="mr-2" />
+          Search
         </button>
       </div>
     </div>

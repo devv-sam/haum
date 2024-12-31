@@ -1,11 +1,25 @@
-import "./singlePage.scss";
-import Slider from "../../components/slider/Slider";
-import Map from "../../components/map/Map";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import Slider from "../../components/slider/Slider";
+import Map from "../../components/map/Map";
+import {
+  MapPin,
+  Bookmark,
+  BookmarkCheck,
+  Droplets,
+  PawPrint,
+  DollarSign,
+  School,
+  Bus,
+  Utensils,
+  SquareStack,
+  Bed,
+  Bath,
+  User,
+} from "lucide-react";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -26,128 +40,173 @@ function SinglePage() {
     }
   };
 
+  const Feature = ({ icon: Icon, title, description }) => (
+    <div className="flex items-start space-x-3 p-4 bg-white rounded-lg">
+      <div className="p-2 bg-blue-50 rounded-lg">
+        <Icon size={24} className="text-blue-600" />
+      </div>
+      <div>
+        <h3 className="font-medium text-gray-900">{title}</h3>
+        <p className="text-sm font-light text-gray-600">{description}</p>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="singlePage">
-      <div className="details">
-        <div className="wrapper">
-          <Slider images={post.images} />
-          <div className="info">
-            <div className="top">
-              <div className="post">
-                <h1>{post.title}</h1>
-                <div className="address">
-                  <img src="/pin.png" alt="" />
-                  <span>{post.address}</span>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-8">
+          {/* Image Slider */}
+          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+            <Slider images={post.images} />
+          </div>
+
+          {/* Property Details */}
+          <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {post.title}
+                </h1>
+                <div className="flex items-center text-gray-600 mb-4">
+                  <MapPin size={20} className="mr-2" />
+                  <span className="font-light">{post.address}</span>
                 </div>
-                <div className="price">$ {post.price}</div>
+                <div className="text-2xl font-semibold text-blue-600">
+                  ₿ {post.price}
+                </div>
               </div>
-              <div className="user">
-                <img src={post.user.avatar} alt="" />
-                <span>{post.user.username}</span>
+              <div className="flex items-center space-x-2 bg-gray-50 rounded-lg p-3">
+                <img
+                  src={post.user.avatar}
+                  alt=""
+                  className="w-10 h-10 rounded-full"
+                />
+                <span className="font-medium text-gray-700">
+                  {post.user.username}
+                </span>
               </div>
             </div>
+
             <div
-              className="bottom"
+              className="prose max-w-none font-light"
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(post.postDetail.desc),
               }}
-            ></div>
+            />
+          </div>
+
+          {/* Property Features */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-gray-900">
+              General Information
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Feature
+                icon={Droplets}
+                title="Utilities"
+                description={`${
+                  post.postDetail.utilities === "owner" ? "Owner" : "Tenant"
+                } is responsible`}
+              />
+              <Feature
+                icon={PawPrint}
+                title="Pet Policy"
+                description={
+                  post.postDetail.pet === "allowed"
+                    ? "Pets Allowed"
+                    : "No Pets Allowed"
+                }
+              />
+              <Feature
+                icon={DollarSign}
+                title="Income Policy"
+                description={post.postDetail.income}
+              />
+            </div>
+          </div>
+
+          {/* Property Sizes */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+              <SquareStack size={24} className="text-blue-600" />
+              <div>
+                <p className="text-sm font-light text-gray-600">Size</p>
+                <p className="font-semibold">{post.postDetail.size} sqft</p>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+              <Bed size={24} className="text-blue-600" />
+              <div>
+                <p className="text-sm font-light text-gray-600">Bedrooms</p>
+                <p className="font-semibold">{post.bedroom}</p>
+              </div>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+              <Bath size={24} className="text-blue-600" />
+              <div>
+                <p className="text-sm font-light text-gray-600">Bathrooms</p>
+                <p className="font-semibold">{post.bathroom}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="features">
-        <div className="wrapper">
-          <p className="title">General</p>
-          <div className="listVertical">
-            <div className="feature">
-              <img src="/utility.png" alt="" />
-              <div className="featureText">
-                <span>Utilities</span>
-                {post.postDetail.utilities === "owner" ? (
-                  <p>Owner is responsible</p>
-                ) : (
-                  <p>Tenant is responsible</p>
-                )}
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/pet.png" alt="" />
-              <div className="featureText">
-                <span>Pet Policy</span>
-                {post.postDetail.pet === "allowed" ? (
-                  <p>Pets Allowed</p>
-                ) : (
-                  <p>Pets not Allowed</p>
-                )}
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/fee.png" alt="" />
-              <div className="featureText">
-                <span>Income Policy</span>
-                <p>{post.postDetail.income}</p>
-              </div>
-            </div>
-          </div>
-          <p className="title">Sizes</p>
-          <div className="sizes">
-            <div className="size">
-              <img src="/size.png" alt="" />
-              <span>{post.postDetail.size} sqft</span>
-            </div>
-            <div className="size">
-              <img src="/bed.png" alt="" />
-              <span>{post.bedroom} beds</span>
-            </div>
-            <div className="size">
-              <img src="/bath.png" alt="" />
-              <span>{post.bathroom} bathroom</span>
-            </div>
-          </div>
-          <p className="title">Nearby Places</p>
-          <div className="listHorizontal">
-            <div className="feature">
-              <img src="/school.png" alt="" />
-              <div className="featureText">
-                <span>School</span>
-                <p>
-                  {post.postDetail.school > 999
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Nearby Places */}
+          <div className="bg-white rounded-xl p-6 shadow-lg">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Nearby Places
+            </h2>
+            <div className="space-y-4">
+              <Feature
+                icon={School}
+                title="School"
+                description={`${
+                  post.postDetail.school > 999
                     ? post.postDetail.school / 1000 + "km"
-                    : post.postDetail.school + "m"}{" "}
-                  away
-                </p>
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/pet.png" alt="" />
-              <div className="featureText">
-                <span>Bus Stop</span>
-                <p>{post.postDetail.bus}m away</p>
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/fee.png" alt="" />
-              <div className="featureText">
-                <span>Restaurant</span>
-                <p>{post.postDetail.restaurant}m away</p>
-              </div>
+                    : post.postDetail.school + "m"
+                } away`}
+              />
+              <Feature
+                icon={Bus}
+                title="Bus Stop"
+                description={`${post.postDetail.bus}m away`}
+              />
+              <Feature
+                icon={Utensils}
+                title="Restaurant"
+                description={`${post.postDetail.restaurant}m away`}
+              />
             </div>
           </div>
-          <p className="title">Location</p>
-          <div className="mapContainer">
-            <Map items={[post]} />
+
+          {/* Map */}
+          <div className="bg-white rounded-xl p-6 shadow-lg">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Location</h2>
+            <div className="h-[300px] rounded-lg overflow-hidden">
+              <Map items={[post]} />
+            </div>
           </div>
-          <div className="buttons">
-            <button
-              onClick={handleSave}
-              style={{
-                backgroundColor: saved ? "#fece51" : "white",
-              }}
-            >
-              <img src="/save.png" alt="" />
-              {saved ? "Place Saved" : "Save the Place"}
-            </button>
-          </div>
+
+          {/* Save Button */}
+          <button
+            onClick={handleSave}
+            className={`w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors duration-200 ${
+              saved
+                ? "bg-blue-600 text-white hover:bg-blue-700"
+                : "bg-blue-50 text-blue-600 hover:bg-blue-100"
+            }`}
+          >
+            {saved ? (
+              <BookmarkCheck size={20} className="mr-2" />
+            ) : (
+              <Bookmark size={20} className="mr-2" />
+            )}
+            {saved ? "Saved" : "Save Property"}
+          </button>
         </div>
       </div>
     </div>
