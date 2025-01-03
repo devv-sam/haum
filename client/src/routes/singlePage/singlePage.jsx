@@ -19,7 +19,6 @@ function SinglePage() {
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  // console.log(post.price);
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");

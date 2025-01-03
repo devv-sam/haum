@@ -34,8 +34,6 @@ export const ExpRemover = async () => {
         },
       },
     });
-
-    console.log(`${expiredPosts.length} expired posts removed.`);
   } catch (error) {
     console.error("Error deleting expired posts:", error);
   }

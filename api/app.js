@@ -16,7 +16,6 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 //cleanup task
 cron.schedule("0 * * * *", () => {
-  console.log("Running cleanup task to remove expired posts...");
   ExpRemover();
 });
 

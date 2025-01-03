@@ -15,8 +15,8 @@ function ProfilePage() {
       await apiRequest.post("/auth/logout");
       updateUser(null);
       navigate("/");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
