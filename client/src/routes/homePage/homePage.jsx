@@ -6,7 +6,7 @@ function HomePage() {
   const { currentUser } = useContext(AuthContext);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className=" px-4 md:px-8 sm:px-6 lg:px-8 pt-20 pb-32">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>

@@ -21,7 +21,7 @@ function Login() {
     try {
       const res = await apiRequest.post("/auth/login", { username, password });
       updateUser(res.data);
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       setError(error.response.data.message);
     } finally {

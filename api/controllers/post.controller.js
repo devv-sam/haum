@@ -1,11 +1,11 @@
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
+import getCoords from "../lib/getCoords.js";
 export const getPosts = async (req, res) => {
   const query = req.query;
   try {
     const posts = await prisma.post.findMany({
       where: {
-        city: query.city || undefined,
         type: query.type || undefined,
         property: query.property || undefined,
         bedroom: parseInt(query.bedroom) || undefined,
@@ -13,11 +13,50 @@ export const getPosts = async (req, res) => {
           gte: parseInt(query.minPrice) || 0,
           lte: parseInt(query.maxPrice) || 100000,
         },
+        isExpired: false,
+      },
+      include: {
+        user: {
+          select: {
+            username: true,
+            avatar: true,
+          },
+        },
       },
     });
-    // setTimeout(() => {
-    res.status(200).json(posts);
-    // }, 3000);
+
+    // If there's a token, check saved status for each post
+    const token = req.cookies?.token;
+    let userId;
+
+    if (token) {
+      try {
+        const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        userId = payload.id;
+      } catch (error) {
+        console.error("Token verification error:", error);
+      }
+    }
+
+    // Add isSaved property to each post
+    const postsWithSavedStatus = await Promise.all(
+      posts.map(async (post) => {
+        if (!userId) return { ...post, isSaved: false };
+
+        const saved = await prisma.savedPost.findUnique({
+          where: {
+            userId_postId: {
+              postId: post.id,
+              userId: userId,
+            },
+          },
+        });
+
+        return { ...post, isSaved: saved ? true : false };
+      })
+    );
+
+    res.status(200).json(postsWithSavedStatus);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to get posts" });
@@ -25,6 +64,7 @@ export const getPosts = async (req, res) => {
 };
 export const getPost = async (req, res) => {
   const id = req.params.id;
+
   try {
     const post = await prisma.post.findUnique({
       where: { id },
@@ -38,6 +78,10 @@ export const getPost = async (req, res) => {
         },
       },
     });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
 
     const token = req.cookies?.token;
 
@@ -54,12 +98,10 @@ export const getPost = async (req, res) => {
         });
         return res.status(200).json({ ...post, isSaved: saved ? true : false });
       } catch (error) {
-        // Token verification failed
         return res.status(200).json({ ...post, isSaved: false });
       }
     }
 
-    // No token case
     return res.status(200).json({ ...post, isSaved: false });
   } catch (error) {
     console.log(error);
@@ -71,22 +113,46 @@ export const addPost = async (req, res) => {
   const body = req.body;
   const tokenUserId = req.userId;
 
+  const delistingDate = new Date(body.postData.delistingDate);
+  const isExpired = delistingDate <= new Date();
+
   try {
+    // Get coordinates for the address
+    const { latitude, longitude } = await getCoords(body.postData.address);
+
+    // Create the post and include the associated user data
     const newPost = await prisma.post.create({
       data: {
         ...body.postData,
         userId: tokenUserId,
+        latitude,
+        longitude,
         postDetail: {
-          create: body.postDetail,
+          create: {
+            desc: body.postDetail.desc,
+            size: body.postDetail.size,
+          },
+        },
+        delistingDate,
+        isExpired,
+      },
+      include: {
+        user: {
+          select: {
+            username: true,
+            avatar: true,
+          },
         },
       },
     });
+
     res.status(200).json(newPost);
   } catch (error) {
-    console.log(error);
+    console.error("Error creating post:", error);
     res.status(500).json({ message: "Failed to create post" });
   }
 };
+
 export const updatePost = async (req, res) => {
   try {
     res.status(200).json();

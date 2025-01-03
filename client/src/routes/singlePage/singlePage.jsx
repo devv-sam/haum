@@ -9,16 +9,9 @@ import {
   MapPin,
   Bookmark,
   BookmarkCheck,
-  Droplets,
-  PawPrint,
-  DollarSign,
-  School,
-  Bus,
-  Utensils,
   SquareStack,
   Bed,
   Bath,
-  User,
 } from "lucide-react";
 
 function SinglePage() {
@@ -26,7 +19,6 @@ function SinglePage() {
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -51,19 +43,18 @@ function SinglePage() {
       </div>
     </div>
   );
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-8">
           {/* Image Slider */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+          <div className="bg-white rounded-xl overflow-hidden shadow-md">
             <Slider images={post.images} />
           </div>
 
           {/* Property Details */}
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-white rounded-xl p-6 shadow-md">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -80,7 +71,7 @@ function SinglePage() {
               <div className="flex items-center space-x-2 bg-gray-50 rounded-lg p-3">
                 <img
                   src={post.user.avatar}
-                  alt=""
+                  alt={post.user.username}
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="font-medium text-gray-700">
@@ -102,29 +93,6 @@ function SinglePage() {
             <h2 className="text-2xl font-bold text-gray-900">
               General Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Feature
-                icon={Droplets}
-                title="Utilities"
-                description={`${
-                  post.postDetail.utilities === "owner" ? "Owner" : "Tenant"
-                } is responsible`}
-              />
-              <Feature
-                icon={PawPrint}
-                title="Pet Policy"
-                description={
-                  post.postDetail.pet === "allowed"
-                    ? "Pets Allowed"
-                    : "No Pets Allowed"
-                }
-              />
-              <Feature
-                icon={DollarSign}
-                title="Income Policy"
-                description={post.postDetail.income}
-              />
-            </div>
           </div>
 
           {/* Property Sizes */}
@@ -156,35 +124,9 @@ function SinglePage() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Nearby Places */}
-          <div className="bg-white rounded-xl p-6 shadow-lg">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              Nearby Places
-            </h2>
-            <div className="space-y-4">
-              <Feature
-                icon={School}
-                title="School"
-                description={`${
-                  post.postDetail.school > 999
-                    ? post.postDetail.school / 1000 + "km"
-                    : post.postDetail.school + "m"
-                } away`}
-              />
-              <Feature
-                icon={Bus}
-                title="Bus Stop"
-                description={`${post.postDetail.bus}m away`}
-              />
-              <Feature
-                icon={Utensils}
-                title="Restaurant"
-                description={`${post.postDetail.restaurant}m away`}
-              />
-            </div>
-          </div>
 
           {/* Map */}
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-white rounded-xl p-6 shadow-md">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Location</h2>
             <div className="h-[300px] rounded-lg overflow-hidden">
               <Map items={[post]} />

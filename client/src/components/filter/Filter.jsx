@@ -8,9 +8,9 @@ function Filter() {
     type: searchParams.get("type") || "",
     city: searchParams.get("city") || "",
     property: searchParams.get("property") || "",
-    minPrice: searchParams.get("minPrice") || 0,
-    maxPrice: searchParams.get("maxPrice") || 100000,
-    bedroom: searchParams.get("bedroom") || 1,
+    minPrice: searchParams.get("minPrice") || undefined,
+    maxPrice: searchParams.get("maxPrice") || undefined,
+    bedroom: searchParams.get("bedroom") || undefined,
   });
 
   const handleChange = (e) => {
@@ -25,16 +25,20 @@ function Filter() {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 mb-6">
+    <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 mb-6">
       <div className="mb-6">
         <h1 className="text-2xl font-[mona_sans] text-gray-900">
           {searchParams.get("city") ? (
             <>
               Search results for{" "}
-              <span className="font-semibold">{searchParams.get("city")}</span>
+              <span className="font-[mona_sans] font-medium">
+                {searchParams.get("city")}
+              </span>
             </>
           ) : (
-            "Find your perfect home"
+            <span className="font-[mona_sans] font-medium">
+              Discover trending properties
+            </span>
           )}
         </h1>
       </div>
@@ -65,8 +69,7 @@ function Filter() {
           defaultValue={query.type}
           className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans] bg-white"
         >
-          <option value="">Any type</option>
-          <option value="invest">Invest</option>
+          <option value="buy">Buy</option>
           <option value="rent">Rent</option>
         </select>
 
@@ -77,11 +80,11 @@ function Filter() {
           defaultValue={query.property}
           className="px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 font-[mona_sans] bg-white"
         >
-          <option value="">Any property</option>
+          <option value="">All</option>
           <option value="apartment">Apartment</option>
           <option value="house">House</option>
           <option value="condo">Condo</option>
-          <option value="land">Land</option>
+          <option value="land">Villa</option>
         </select>
 
         <input
@@ -116,7 +119,7 @@ function Filter() {
 
         <button
           onClick={handleFilter}
-          className="flex items-center justify-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-[mona_sans]"
+          className="flex items-center justify-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-200 font-[mona_sans]"
         >
           <Search size={20} className="mr-2" />
           Search

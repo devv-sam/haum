@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
+const types = ["buy", "rent"];
 
 const SearchBar = () => {
-  const types = ["invest", "rent"];
   const [query, setQuery] = useState({
-    type: "Invest", // Default type is "Invest"
-    location: "",
+    type: "buy",
+    city: "",
     minPrice: 0,
     maxPrice: 0,
   });
@@ -24,7 +24,7 @@ const SearchBar = () => {
             <button
               key={type}
               onClick={() => switchType(type)}
-              className={`px-6 py-3 rounded-full text-full font-medium font-['Mona_Sans'] capitalize transition-colors 
+              className={`px-6 py-3 rounded-full text-full font-medium font-['Mona_Sans']  capitalize transition-colors 
                 ${
                   query.type === type
                     ? "bg-black text-white"
@@ -56,14 +56,14 @@ const SearchBar = () => {
       {/* Min Price Input */}
       <div className="flex flex-col w-full md:w-1/4">
         <label className="text-sm text-gray-500 mb-1 font-['Mona_Sans']">
-          Min Price
+          Min token price
         </label>
         <input
           type="number"
           name="minPrice"
           min={0}
           max={10000000}
-          placeholder="₿100.00"
+          placeholder="0.05 ETH"
           className="p-2 font-['Mona_Sans'] focus:outline-none"
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, minPrice: Number(e.target.value) }))
@@ -74,14 +74,14 @@ const SearchBar = () => {
       {/* Max Price Input */}
       <div className="flex flex-col w-full md:w-1/4">
         <label className="text-sm text-gray-500 mb-1 font-['Mona_Sans']">
-          Max Price
+          Max token price
         </label>
         <input
           type="number"
           name="maxPrice"
           min={0}
           max={10000000}
-          placeholder="₿1,000.00"
+          placeholder="10.00 ETH"
           className="p-2 font-['Mona_Sans'] focus:outline-none"
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, maxPrice: Number(e.target.value) }))

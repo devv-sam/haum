@@ -15,7 +15,6 @@ datasource db {
 model User {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   email      String      @unique
- 
   name   String   
   username   String      @unique
   password   String
@@ -30,11 +29,10 @@ model Post {
   price      Int
   images     String[]
   address    String
-  city       String
   bedroom    Int
   bathroom   Int
-  latitude   String
-  longitude  String
+  latitude   Float?     
+  longitude  Float? 
   type       Type
   property   Property
   createdAt  DateTime    @default(now())
@@ -42,13 +40,15 @@ model Post {
   userId     String      @db.ObjectId
   postDetail PostDetail?
   savedPosts SavedPost[]
+  delistingDate DateTime   // The date and time when the listing will expire or be removed
+  isExpired     Boolean 
 }
-
 
 enum Type {
-  invest
+  buy
   rent
 }
+
 
 enum Property {
   apartment
@@ -60,13 +60,7 @@ enum Property {
 model PostDetail {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   desc       String
-  utilities  String?
-  pet        String?
-  income     String?
   size       Int?
-  school     Int?
-  bus        Int?
-  restaurant Int?
   post       Post    @relation(fields: [postId], references: [id])
   postId     String  @unique @db.ObjectId
 }
