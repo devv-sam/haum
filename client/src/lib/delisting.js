@@ -6,7 +6,7 @@ const getRemainingTime = (delistingDate) => {
 
   const hours = Math.floor(timeLeft / (1000 * 60 * 60));
   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  return `${hours} hours, ${minutes} minutes left`;
+  return `${hours}h ${minutes}m`;
 };
 
 export default getRemainingTime;

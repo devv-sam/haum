@@ -73,8 +73,8 @@ const Card = ({ item }) => {
                   alt={`${item.user.username}'s avatar`}
                   className="w-8 h-8 rounded-full"
                 />
-                <span className="font-mona_sans font-medium text-gray-900">
-                  {item.user.username}
+                <span className="font-mona_sans font-medium text-gray-900 lowercase hover:text-blue-700 cursor-pointer duration-200">
+                  @{item.user.username}
                 </span>
               </>
             ) : (
@@ -83,7 +83,7 @@ const Card = ({ item }) => {
           </div>
         </div>
 
-        <h2 className="text-lg font-mona_sans font-semibold text-gray-900 mb-4">
+        <h2 className="text-lg font-mona_sans font-semibold text-gray-900 mb-4 capitalize">
           {item.title}
         </h2>
 
@@ -97,7 +97,7 @@ const Card = ({ item }) => {
           <div className="text-right">
             <p className="text-gray-500">Price per token</p>
             <p className="font-mona_sans font-medium">
-              {item.price.toLocaleString()} ETH
+              {item.price.toFixed(2).toLocaleString()} ETH
             </p>
           </div>
         </div>

@@ -19,6 +19,7 @@ function SinglePage() {
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  // console.log(post.price);
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -65,7 +66,7 @@ function SinglePage() {
                   <span className="font-light">{post.address}</span>
                 </div>
                 <div className="text-2xl font-semibold text-blue-600">
-                  ₿ {post.price}
+                  {post.price.toFixed(2)} ETH
                 </div>
               </div>
               <div className="flex items-center space-x-2 bg-gray-50 rounded-lg p-3">

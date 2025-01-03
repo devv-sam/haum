@@ -1,4 +1,4 @@
-import React, { useContext, Suspense } from "react";
+import { useContext, Suspense } from "react";
 import { Link, useNavigate, useLoaderData, Await } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
@@ -124,7 +124,7 @@ function ProfilePage() {
         </div>
 
         {/* Saved List Section */}
-        <div className="bg-white rounded-2xl shadow-sm">
+        {/* <div className="bg-white rounded-2xl shadow-sm">
           <div className="p-6 sm:p-8">
             <div className="mb-6">
               <h2 className="text-xl font-bold font-mona_sans">Saved Posts</h2>
@@ -149,8 +149,9 @@ function ProfilePage() {
                 )}
               </Await>
             </Suspense>
+            
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

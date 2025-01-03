@@ -113,11 +113,11 @@ const Navbar = () => {
 
             {currentUser ? (
               <Link
-                to="/profile"
+                to="/wallet"
                 onClick={() => setIsOpen(false)}
                 className="w-full md:w-auto bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-colors font-['Mona_Sans'] text-lg text-center"
               >
-                Profile
+                Launch Wallet
               </Link>
             ) : (
               <Link

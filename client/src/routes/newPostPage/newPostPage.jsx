@@ -151,7 +151,7 @@ function NewPostPage() {
                 htmlFor="address"
                 className="block text-gray-600 font-medium"
               >
-                Address
+                City
               </label>
               <input
                 id="address"
