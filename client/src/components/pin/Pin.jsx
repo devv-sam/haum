@@ -5,7 +5,7 @@ function Pin({ item }) {
   return (
     <Marker position={[item.latitude, item.longitude]}>
       <Popup>
-        <div className="flex gap-5">
+        <div>
           <img
             src={item.images[0]}
             alt={item.title}
@@ -16,9 +16,9 @@ function Pin({ item }) {
               {item.title}
             </Link>
             <span className="text-sm text-gray-600">
-              {item.bedroom} bedroom
+              {item.bedroom}bd | {item.bathroom}ba
             </span>
-            <b className="text-lg text-gray-800">$ {item.price}</b>
+            <b className="text-md text-gray-800">{item.price.toFixed(2)} ETH</b>
           </div>
         </div>
       </Popup>

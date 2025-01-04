@@ -119,7 +119,6 @@ export const addPost = async (req, res) => {
   try {
     // Get coordinates for the address
     const { latitude, longitude } = await getCoords(body.postData.address);
-
     // Create the post and include the associated user data
     const newPost = await prisma.post.create({
       data: {
@@ -130,6 +129,7 @@ export const addPost = async (req, res) => {
         postDetail: {
           create: {
             desc: body.postDetail.desc,
+            tokensrem: body.postDetail.tokensrem,
             size: body.postDetail.size,
           },
         },

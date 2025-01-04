@@ -61,6 +61,7 @@ model PostDetail {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   desc       String
   size       Int?
+  tokensrem  Int?
   post       Post    @relation(fields: [postId], references: [id])
   postId     String  @unique @db.ObjectId
 }

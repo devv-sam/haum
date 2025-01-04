@@ -40,7 +40,7 @@ function NewPostPage() {
         },
         postDetail: {
           desc: value,
-          tokensrem: inputs.tokensrem,
+          tokensrem: parseInt(inputs.tknrem),
           size: parseInt(inputs.size),
           delistingDate: delistingDate.toISOString(), // Add delistingDate here as well
         },
@@ -94,7 +94,7 @@ function NewPostPage() {
             {/* Price */}
             <div>
               <label htmlFor="price" className="flex text-gray-600 font-medium">
-                Price per Token <span className="text-red-500">*</span>
+                Price per token <span className="text-red-500">*</span>
               </label>
               <input
                 id="price"
@@ -105,13 +105,17 @@ function NewPostPage() {
             </div>
             {/* Tokens Available */}
             <div>
-              <label htmlFor="price" className="flex text-gray-600 font-medium">
+              <label
+                htmlFor="tknrem"
+                className="flex text-gray-600 font-medium"
+              >
                 Tokens Available <span className="text-red-500">*</span>
               </label>
               <input
                 min={1}
                 id="tknrem"
                 name="tknrem"
+                required
                 type="number"
                 className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -233,7 +237,7 @@ function NewPostPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-200"
+            className="w-full bg-blue-600 text-white  px-8 py-4 rounded-full  hover:bg-blue-700 transition duration-200"
           >
             Publish Unit
           </button>

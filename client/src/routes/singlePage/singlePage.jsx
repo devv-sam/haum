@@ -5,20 +5,23 @@ import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
-import {
-  MapPin,
-  Bookmark,
-  BookmarkCheck,
-  SquareStack,
-  Bed,
-  Bath,
-} from "lucide-react";
+import { MapPin } from "lucide-react";
 
 function SinglePage() {
   const post = useLoaderData();
   const [saved, setSaved] = useState(post.isSaved);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
@@ -32,123 +35,136 @@ function SinglePage() {
     }
   };
 
-  const Feature = ({ icon: Icon, title, description }) => (
-    <div className="flex items-start space-x-3 p-4 bg-white rounded-lg">
-      <div className="p-2 bg-blue-50 rounded-lg">
-        <Icon size={24} className="text-blue-600" />
-      </div>
-      <div>
-        <h3 className="font-medium text-gray-900">{title}</h3>
-        <p className="text-sm font-light text-gray-600">{description}</p>
-      </div>
-    </div>
-  );
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Image Slider */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-md">
-            <Slider images={post.images} />
-          </div>
-
-          {/* Property Details */}
-          <div className="bg-white rounded-xl p-6 shadow-md">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+    <div className="min-h-screen bg-white">
+      <div className="px-4 md:px-8 mx-auto py-8">
+        <div className="flex flex-col lg:flex-row justify-between gap-8">
+          {/* Left Column */}
+          <div className="lg:w-[45%]">
+            <div>
+              {/* Header Section */}
+              <div className="mb-6 ">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 ">
                   {post.title}
                 </h1>
-                <div className="flex items-center text-gray-600 mb-4">
-                  <MapPin size={20} className="mr-2" />
-                  <span className="font-light">{post.address}</span>
+                <div className="flex items-center pb-6">
+                  <MapPin size={20} color="gray" />
+                  <p className="text-gray-600 ">{post.address}</p>
                 </div>
-                <div className="text-2xl font-semibold text-blue-600">
-                  {post.price.toFixed(2)} ETH
+                {/* Key Stats */}
+                <div className="border-b border-gray-200 pb-6 mb-6">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div>
+                      <p className="text-gray-500 text-sm">Price per token</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">
+                        {post.price.toFixed(2)} ETH
+                      </p>
+                    </div>
+                    <div className="md:border-l border-gray-200 md:pl-4">
+                      <p className="text-gray-500 text-sm">Tokens Available</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">
+                        {post.postDetail.tokensrem ?? "N/A"}
+                      </p>
+                    </div>
+                    <div className="md:border-l border-gray-200 md:pl-4">
+                      <p className="text-gray-500 text-sm">Size</p>
+                      <p className="text-2xl md:text-3xl font-bold text-gray-900">
+                        {post.postDetail.size} m²
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 bg-gray-50 rounded-lg p-3">
-                <img
-                  src={post.user.avatar}
-                  alt={post.user.username}
-                  className="w-10 h-10 rounded-full"
-                />
-                <span className="font-medium text-gray-700">
-                  {post.user.username}
-                </span>
+            </div>
+
+            {/* Creator Info and Bid Button */}
+            <div className="mb-8">
+              <div className="flex lg:items-center flex-col md:flex-row justify-between mb-6 gap-6">
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={post.user.avatar}
+                    alt={post.user.username}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <p className="text-sm text-gray-500">Listed by</p>
+                    <p className="font-medium">{post.user.username}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleSave}
+                  className={`px-8 py-4 rounded-full font-medium transition-colors duration-200 ${
+                    saved
+                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      : "bg-blue-50 text-blue-600 hover:bg-blue-100"
+                  }`}
+                >
+                  {saved ? "Bid Placed" : "Place a Bid"}
+                </button>
               </div>
             </div>
 
-            <div
-              className="prose max-w-none font-light"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.postDetail.desc),
-              }}
-            />
-          </div>
-
-          {/* Property Features */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900">
-              General Information
-            </h2>
-          </div>
-
-          {/* Property Sizes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
-              <SquareStack size={24} className="text-blue-600" />
-              <div>
-                <p className="text-sm font-light text-gray-600">Size</p>
-                <p className="font-semibold">{post.postDetail.size} sqft</p>
+            {/* Property Details Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div className="text-center p-4">
+                <p className="text-gray-500 text-sm">Bedrooms</p>
+                <p className="font-medium">{post.bedroom}</p>
+              </div>
+              <div className="text-center p-4">
+                <p className="text-gray-500 text-sm">Bathrooms</p>
+                <p className="font-medium">{post.bathroom}</p>
+              </div>
+              <div className="text-center p-4">
+                <p className="text-gray-500 text-sm">Property Type</p>
+                <p className="font-medium capitalize">{post.property}</p>
+              </div>
+              <div className="text-center p-4">
+                <p className="text-gray-500 text-sm">Listed Date</p>
+                <p className="font-medium">{formatDate(post.createdAt)}</p>
               </div>
             </div>
-            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
-              <Bed size={24} className="text-blue-600" />
-              <div>
-                <p className="text-sm font-light text-gray-600">Bedrooms</p>
-                <p className="font-semibold">{post.bedroom}</p>
-              </div>
+
+            {/* Description */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Description
+              </h2>
+              <div
+                className="prose max-w-none text-gray-600"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(post.postDetail.desc),
+                }}
+              />
             </div>
-            <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
-              <Bath size={24} className="text-blue-600" />
-              <div>
-                <p className="text-sm font-light text-gray-600">Bathrooms</p>
-                <p className="font-semibold">{post.bathroom}</p>
+
+            {/* Map */}
+            <div className="mt-8">
+              <div className="flex items-center space-x-2 mb-4">
+                <MapPin className="w-5 h-5 text-gray-500" />
+                <h2 className="text-xl font-bold text-gray-900">Location</h2>
+              </div>
+              <div className="h-[300px] rounded-lg overflow-hidden">
+                <Map items={[post]} />
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Nearby Places */}
-
-          {/* Map */}
-          <div className="bg-white rounded-xl p-6 shadow-md">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Location</h2>
-            <div className="h-[300px] rounded-lg overflow-hidden">
-              <Map items={[post]} />
+          {/* Right Column - Slider */}
+          <div className="lg:w-[50%] flex flex-col gap-4">
+            <Slider images={post.images} />
+            <div className="flex gap-4">
+              <img
+                src={post.images[2]}
+                alt={post.title}
+                className="w-1/3 rounded-xl object-cover hidden md:block"
+              />
+              <img
+                src={post.images[3]}
+                alt={post.title}
+                className="w-1/3 rounded-xl object-cover h-auto hidden md:block"
+              />
             </div>
           </div>
-
-          {/* Save Button */}
-          <button
-            onClick={handleSave}
-            className={`w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors duration-200 ${
-              saved
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-blue-50 text-blue-600 hover:bg-blue-100"
-            }`}
-          >
-            {saved ? (
-              <BookmarkCheck size={20} className="mr-2" />
-            ) : (
-              <Bookmark size={20} className="mr-2" />
-            )}
-            {saved ? "Saved" : "Save Property"}
-          </button>
         </div>
       </div>
     </div>
