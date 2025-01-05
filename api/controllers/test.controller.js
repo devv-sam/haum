@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-export const loggedIn = async (req, res) => {
+const loggedIn = async (req, res) => {
   res.status(200).json({ message: "Authentication successful" });
 };
 
-export const admin = async (req, res) => {
+const admin = async (req, res) => {
   //verify token
   const token = req.cookies.token;
   // if we don't have a token, return an "unauthorized"
@@ -19,3 +19,5 @@ export const admin = async (req, res) => {
   });
   res.status(200).json({ message: "Authentication successful" });
 };
+
+export { loggedIn, admin };

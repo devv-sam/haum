@@ -61,7 +61,7 @@ function SinglePage() {
                       </p>
                     </div>
                     <div className="md:border-l border-gray-200 md:pl-4">
-                      <p className="text-gray-500 text-sm">Tokens Available</p>
+                      <p className="text-gray-500 text-sm">Tokens available</p>
                       <p className="text-2xl md:text-3xl font-bold text-gray-900">
                         {post.postDetail.tokensrem ?? "N/A"}
                       </p>
@@ -152,18 +152,16 @@ function SinglePage() {
           {/* Right Column - Slider */}
           <div className="lg:w-[50%] flex flex-col gap-4">
             <Slider images={post.images} />
-            <div className="flex gap-4">
-              <img
-                src={post.images[2]}
-                alt={post.title}
-                className="w-1/3 rounded-xl object-cover hidden md:block"
-              />
-              <img
-                src={post.images[3]}
-                alt={post.title}
-                className="w-1/3 rounded-xl object-cover h-auto hidden md:block"
-              />
-            </div>
+            {/* <div className="flex gap-4 ">
+              {post.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Property Image ${index + 1}`}
+                  className="w-1/3 h-48 object-cover rounded-lg"
+                />
+              ))}
+            </div> */}
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
-export const register = async (req, res) => {
+const register = async (req, res) => {
   const { fname, lname, name, username, email, password } = req.body;
 
   try {
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await prisma.user.findUnique({
@@ -75,6 +75,8 @@ export const login = async (req, res) => {
   // check if user exists
 };
 
-export const logout = (req, res) => {
+const logout = (req, res) => {
   res.clearCookie("token").status(200).json({ message: "Logout successful" });
 };
+
+export { register, login, logout };

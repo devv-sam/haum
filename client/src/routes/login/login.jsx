@@ -91,7 +91,7 @@ function Login() {
             {/* Register Link */}
             <div className="text-center">
               <p className="text-gray-600">
-                Don't have an account?{" "}
+                Don{"'"}t have an account?{" "}
                 <Link
                   to="/register"
                   className="text-blue-600 hover:text-blue-700 font-[mona_sans]"

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
-import UploadWidget from "../../components/uploadWidget/UploadWidget";
+import ProfileImageUpload from "../../components/uploadWidget/ProfileUploadWidget.jsx";
 
 function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
@@ -180,15 +180,15 @@ function ProfileUpdatePage() {
           alt="Profile avatar"
           className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
         />
-        <UploadWidget
+        <ProfileImageUpload
           uwConfig={{
             cloudName: "dpwr2insh",
             uploadPreset: "estate",
-            multiple: false,
             maxImageSize: 20000000,
             folder: "avatars",
           }}
           setState={setAvatar}
+          currentAvatar={currentUser.avatar}
         />
         <p className="text-gray-600 text-sm mt-2">Max size: 20MB</p>
       </div>
