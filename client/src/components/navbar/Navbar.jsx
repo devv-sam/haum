@@ -7,8 +7,12 @@ import { X } from "lucide-react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
+    {
+      currentUser ? setAvatar(currentUser.avatar) : setAvatar(null);
+    }
     if (isOpen) {
       gsap.to(".menu-overlay", {
         opacity: 1,
@@ -50,14 +54,22 @@ const Navbar = () => {
       <Link to="/" className="flex items-center gap-3 z-30">
         <img src="/logo.svg" alt="Logo" className="w-12 h-12 md:w-16 md:h-16" />
       </Link>
-
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="z-30 flex items-center gap-2 font-['Mona_Sans'] hover:opacity-70 transition-opacity"
-      >
-        <span className="text-lg">•</span>
-        <span className="text-lg font-['Mona_Sans'] font-medium">Menu</span>
-      </button>
+      <div className="flex gap-4 items-center">
+        <Link to="/profile">
+          <img
+            src={{ avatar } || "/circle-user.png"}
+            alt="Profile"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full hidden md:block hover:opacity-70 transition-opacity"
+          />
+        </Link>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="z-30 flex items-center gap-2 font-['Mona_Sans'] hover:opacity-70 transition-opacity"
+        >
+          <span className="text-lg">•</span>
+          <span className="text-lg font-['Mona_Sans'] font-medium">Menu</span>
+        </button>
+      </div>
 
       <div
         className={`menu-overlay fixed inset-0 flex items-center justify-center ${
@@ -93,6 +105,13 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <Link
+              to="/profile"
+              onClick={() => setIsOpen(false)}
+              className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium font-['Mona_Sans'] hover:text-white/80 transition-colors md:hidden"
+            >
+              Profile
+            </Link>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
