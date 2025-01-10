@@ -7,12 +7,8 @@ import { X } from "lucide-react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
-    {
-      currentUser ? setAvatar(currentUser.avatar) : setAvatar(null);
-    }
     if (isOpen) {
       gsap.to(".menu-overlay", {
         opacity: 1,
@@ -57,9 +53,13 @@ const Navbar = () => {
       <div className="flex gap-4 items-center">
         <Link to="/profile">
           <img
-            src={{ avatar } || "/circle-user.png"}
+            src={
+              currentUser && currentUser.avatar
+                ? currentUser.avatar
+                : "/circle-user.svg"
+            }
             alt="Profile"
-            className="w-8 h-8 md:w-10 md:h-10 rounded-full hidden md:block hover:opacity-70 transition-opacity"
+            className="w-6 h-6 md:w-9 md:h-9 rounded-full hidden md:block hover:opacity-70 transition-opacity"
           />
         </Link>
         <button

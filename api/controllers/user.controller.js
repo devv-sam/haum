@@ -78,32 +78,16 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// Save post
+// save post
 export const savePost = async (req, res) => {
   try {
     const { postId } = req.body;
-    const userId = req.user.id;
+    const tokenUserId = req.userId;
 
-    // Check if already saved
-    const existingSave = await prisma.savedPost.findFirst({
-      where: {
-        userId: userId,
-        postId: postId,
-      },
-    });
-
-    if (existingSave) {
-      return res.status(400).json({
-        success: false,
-        message: "Post already saved",
-      });
-    }
-
-    // Create new save
-    await prisma.savedPost.create({
+    const saved = await prisma.savedPost.create({
       data: {
-        userId: userId,
-        postId: postId,
+        userId: tokenUserId,
+        postId,
       },
     });
 
@@ -111,24 +95,34 @@ export const savePost = async (req, res) => {
       success: true,
       message: "Post saved successfully",
     });
-  } catch (err) {
+  } catch (error) {
+    console.error("Save post error:", error);
+    // Check if it's a unique constraint violation
+    if (error.code === "P2002") {
+      return res.status(400).json({
+        success: false,
+        message: "Post already saved",
+      });
+    }
     res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to save post",
     });
   }
 };
 
-// Unsave post
+// unsave post
 export const unsavePost = async (req, res) => {
   try {
     const { postId } = req.body;
-    const userId = req.user.id;
+    const tokenUserId = req.userId;
 
-    await prisma.savedPost.deleteMany({
+    await prisma.savedPost.delete({
       where: {
-        userId: userId,
-        postId: postId,
+        userId_postId: {
+          userId: tokenUserId,
+          postId,
+        },
       },
     });
 
@@ -136,10 +130,11 @@ export const unsavePost = async (req, res) => {
       success: true,
       message: "Post unsaved successfully",
     });
-  } catch (err) {
+  } catch (error) {
+    console.error("Unsave post error:", error);
     res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to unsave post",
     });
   }
 };

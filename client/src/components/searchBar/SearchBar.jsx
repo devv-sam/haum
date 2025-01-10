@@ -63,7 +63,7 @@ const SearchBar = () => {
           name="minPrice"
           min={0}
           max={10000000}
-          placeholder="0.05 ETH"
+          placeholder="00.05 ETH"
           className="p-2 font-['Mona_Sans'] focus:outline-none"
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, minPrice: Number(e.target.value) }))
@@ -81,7 +81,7 @@ const SearchBar = () => {
           name="maxPrice"
           min={0}
           max={10000000}
-          placeholder="10.00 ETH"
+          placeholder="01.35 ETH"
           className="p-2 font-['Mona_Sans'] focus:outline-none"
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, maxPrice: Number(e.target.value) }))

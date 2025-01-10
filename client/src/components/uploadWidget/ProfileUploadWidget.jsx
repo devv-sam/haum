@@ -16,11 +16,6 @@ const ProfileImageUpload = ({ uwConfig, setState, currentAvatar }) => {
   return (
     <div className="space-y-4">
       <div className="relative w-32 h-32 mx-auto">
-        <img
-          src={currentAvatar || "/default-avatar.png"}
-          alt="Profile"
-          className="w-full h-full rounded-full object-cover"
-        />
         <button
           onClick={initializeCloudinaryWidget}
           disabled={!loaded}

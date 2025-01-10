@@ -67,7 +67,10 @@ function ProfileUpdatePage() {
   if (!currentUser) {
     return <div>Please log in to update your profile.</div>;
   }
-
+  // Destructure first and last name from currentUser.name
+  const [firstName, lastName] = currentUser?.name
+    ? currentUser.name.split(" ")
+    : ["", ""];
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row items-center lg:items-start gap-8 p-8">
       {/* Form Section */}
@@ -89,7 +92,7 @@ function ProfileUpdatePage() {
                 id="fname"
                 name="fname"
                 type="text"
-                defaultValue={currentUser.fname}
+                defaultValue={firstName}
                 className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -100,11 +103,12 @@ function ProfileUpdatePage() {
               >
                 Last Name
               </label>
+
               <input
                 id="lname"
                 name="lname"
                 type="text"
-                defaultValue={currentUser.lname}
+                defaultValue={lastName}
                 className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

@@ -13,6 +13,11 @@ const Card = ({ item }) => {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    // Don't proceed if already saved
+    if (saved && !isLoading) {
+      return;
+    }
+
     if (!currentUser) {
       navigate("/login");
       return;
@@ -48,9 +53,15 @@ const Card = ({ item }) => {
           <button
             onClick={handleSave}
             disabled={isLoading}
-            className={`p-2 rounded-full bg-white/90 backdrop-blur-sm transition-colors duration-200 ${
-              isLoading ? "opacity-50 cursor-not-allowed" : ""
-            } ${saved ? "text-blue-600" : "text-gray-600 hover:text-blue-600"}`}
+            className={`p-2 rounded-full bg-white/90 backdrop-blur-sm transition-colors duration-200 
+    ${isLoading ? "opacity-50 cursor-not-allowed" : ""}
+    ${
+      saved
+        ? "text-blue-600 cursor-default"
+        : "text-gray-600 hover:text-blue-600"
+    }
+  `}
+            title={saved ? "Already saved" : "Save this item"}
           >
             {saved ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
           </button>

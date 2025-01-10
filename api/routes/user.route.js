@@ -4,9 +4,11 @@ import {
   getUser,
   getUsers,
   updateUser,
-  savePost,
   profilePosts,
+  savePost,
+  unsavePost,
 } from "../controllers/user.controller.js";
+
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -16,6 +18,7 @@ router.get("/", getUsers);
 router.put("/:id", verifyToken, updateUser);
 router.delete("/:id", verifyToken, deleteUser);
 router.post("/save", verifyToken, savePost);
+router.post("/unsave", verifyToken, unsavePost);
 router.get("/profilePosts", verifyToken, profilePosts);
 
 export default router;
