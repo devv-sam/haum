@@ -89,7 +89,7 @@ const Card = ({ item }) => {
                 </span>
               </>
             ) : (
-              <span className="text-gray-500">Anonymous</span>
+              <span></span>
             )}
           </div>
         </div>
