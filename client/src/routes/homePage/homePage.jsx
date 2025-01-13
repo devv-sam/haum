@@ -1,7 +1,7 @@
 import SearchBar from "../../components/searchBar/SearchBar";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
-
+import Showcase from "../../components/showcase/Showcase";
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
 
@@ -32,6 +32,9 @@ function HomePage() {
             <SearchBar />
           </div>
         </div>
+      </div>
+      <div className="px-4 md:px-8 sm:px-6 lg:px-8">
+        <Showcase />
       </div>
     </div>
   );

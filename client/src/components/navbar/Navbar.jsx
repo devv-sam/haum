@@ -144,7 +144,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className="w-full md:w-auto bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 font-['Mona_Sans'] transition-colors text-lg text-center"
               >
-                Sign in
+                Connect Wallet
               </Link>
             )}
           </div>
