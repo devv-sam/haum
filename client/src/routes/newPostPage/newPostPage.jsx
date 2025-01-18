@@ -40,7 +40,6 @@ function NewPostPage() {
         },
         postDetail: {
           desc: value,
-          tokensrem: parseInt(inputs.tknrem),
           size: parseInt(inputs.size),
           delistingDate: delistingDate.toISOString(), // Add delistingDate here as well
         },
@@ -103,23 +102,7 @@ function NewPostPage() {
                 className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            {/* Tokens Available */}
-            <div>
-              <label
-                htmlFor="tknrem"
-                className="flex text-gray-600 font-medium"
-              >
-                Tokens Available <span className="text-red-500">*</span>
-              </label>
-              <input
-                min={1}
-                id="tknrem"
-                name="tknrem"
-                required
-                type="number"
-                className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+
             {/* Delisting Period */}
             <div>
               <label

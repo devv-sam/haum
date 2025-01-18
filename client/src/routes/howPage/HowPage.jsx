@@ -193,12 +193,21 @@ const HowItWorks = () => {
               Explore marketplace →
             </a>
           </div>
-          <div className="section-image h-[400px] md:h-[500px]">
-            <img
-              src="/house-banner.jpeg"
-              alt="Marketplace"
-              className="w-full h-full object-cover rounded-xl"
-            />
+          <div className="section-image flex flex-col md:grid grid-cols-2 gap-4 md:gap-8">
+            <div className="mt-12">
+              <img
+                src="/sellbuy.png"
+                alt="Connect portfolio view 2"
+                className="w-full h-auto rounded-lg shadow-lg bg-[#cfd0cf]"
+              />
+            </div>
+            <div>
+              <img
+                src="/marketplace.png"
+                alt="Connect portfolio view 1"
+                className="w-full h-auto rounded-lg shadow-lg bg-[#cfd0cf]"
+              />
+            </div>
           </div>
         </div>
 
@@ -224,12 +233,14 @@ const HowItWorks = () => {
               and stress-free.
             </p>
           </div>
-          <div className="section-image h-[400px] md:h-[500px]">
-            <img
-              src="/house-banner.jpeg"
-              alt="Bidding"
-              className="w-full h-full object-cover rounded-xl"
-            />
+          <div className="section-image flex justify-center items-center">
+            <div className="max-w-[400px] w-full">
+              <img
+                src="/buysell.png"
+                alt="Place bid view 1"
+                className="w-full h-auto rounded-lg shadow-lg bg-[#cfd0cf]"
+              />
+            </div>
           </div>
         </div>
       </div>

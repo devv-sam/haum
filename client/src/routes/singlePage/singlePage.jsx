@@ -60,12 +60,7 @@ function SinglePage() {
                         {post.price.toFixed(2)} ETH
                       </p>
                     </div>
-                    <div className="md:border-l border-gray-200 md:pl-4">
-                      <p className="text-gray-500 text-sm">Tokens available</p>
-                      <p className="text-2xl md:text-3xl font-bold text-gray-900">
-                        {post.postDetail.tokensrem ?? "N/A"}
-                      </p>
-                    </div>
+
                     <div className="md:border-l border-gray-200 md:pl-4">
                       <p className="text-gray-500 text-sm">Size</p>
                       <p className="text-2xl md:text-3xl font-bold text-gray-900">
