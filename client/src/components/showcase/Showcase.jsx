@@ -124,8 +124,8 @@ const Showcase = () => {
             </h2>
           </div>
           <div className="flex-1 md:text-right md:pr-28">
-            <p className="text-gray-600 text-sm">
-              The smart real estate marketplace with everything for everyone
+            <p className="text-gray-600 text-md">
+              The smart real estate marketplace with something for everyone
             </p>
           </div>
         </div>

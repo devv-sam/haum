@@ -7,9 +7,10 @@ import SinglePage from "./routes/singlePage/singlePage";
 import ProfilePage from "./routes/profilePage/profilePage";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
-import Wallet from "./routes/wallet/wallet";
+import Portfolio from "./routes/portfolio/portfolio";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
+import HowPage from "./routes/howPage/HowPage";
 import {
   listPageLoader,
   profilePageLoader,
@@ -44,9 +45,13 @@ function App() {
           element: <Register />,
         },
         {
-          path: "/wallet",
-          element: <Wallet />,
+          path: "/portfolio",
+          element: <Portfolio />,
           loader: profilePageLoader,
+        },
+        {
+          path: "/how-it-works",
+          element: <HowPage />,
         },
       ],
     },

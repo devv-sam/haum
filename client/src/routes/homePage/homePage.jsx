@@ -1,11 +1,7 @@
 import SearchBar from "../../components/searchBar/SearchBar";
-import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
 import Showcase from "../../components/showcase/Showcase";
 import { Link } from "react-router-dom";
 function HomePage() {
-  const { currentUser } = useContext(AuthContext);
-
   return (
     <div className="min-h-screen bg-white">
       <div className=" px-4 md:px-8 sm:px-6 lg:px-8 pt-20 pb-32">
@@ -22,10 +18,10 @@ function HomePage() {
             </p>
             <div className="flex flex-col md:flex-row gap-4">
               <Link
-                to="/wallet"
+                to="/portfolio"
                 className="w-full md:w-auto bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 font-['Mona_Sans'] transition-colors text-lg text-center"
               >
-                Launch Wallet
+                Launch Portfolio
               </Link>
               <Link
                 to="/how-it-works"
@@ -39,7 +35,7 @@ function HomePage() {
 
         <div className="relative">
           <img
-            src="/modern-houses.png"
+            src="/house-banner.jpeg"
             alt="Modern Houses"
             className="w-full h-[500px] object-cover rounded-3xl mb-8"
           />

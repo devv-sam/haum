@@ -3,7 +3,7 @@ import { useLoaderData, Await } from "react-router-dom";
 import List from "../../components/list/List";
 import { PlusCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-function Wallet() {
+function Portfolio() {
   const data = useLoaderData();
 
   return (
@@ -12,7 +12,7 @@ function Wallet() {
       <div className="bg-white rounded-2xl shadow-sm">
         <div className="p-6 sm:p-8">
           <div className="mb-6">
-            <h2 className="text-xl font-bold font-mona_sans">Saved Posts</h2>
+            <h2 className="text-xl font-bold font-mona_sans">Portfolio</h2>
           </div>
           <Suspense
             fallback={
@@ -66,4 +66,4 @@ function Wallet() {
   );
 }
 
-export default Wallet;
+export default Portfolio;

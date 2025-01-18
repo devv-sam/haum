@@ -27,7 +27,7 @@ function ProfilePage() {
             <div className="flex justify-between items-center mb-8">
               <h1 className="text-2xl font-bold font-mona_sans">Profile</h1>
               <Link to="/profile/update">
-                <button className="inline-flex items-center  px-8 py-4  rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                <button className="inline-flex items-center  px-6 py-4  rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                   <Edit className="w-4 h-4 mr-2" />
                   Edit Profile
                 </button>
@@ -79,7 +79,7 @@ function ProfilePage() {
               <div className="pt-6 border-t">
                 <button
                   onClick={handleLogout}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4  rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4  rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
