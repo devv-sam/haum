@@ -153,12 +153,14 @@ const HowItWorks = () => {
               Connect your wallet →
             </a>
           </div>
-          <div className="section-image h-[400px] md:h-[500px]">
-            <img
-              src="/mobile-login.png"
-              alt="Connect portfolio"
-              className="w-full h-full object-cover rounded-xl"
-            />
+          <div className="section-image flex justify-center items-center">
+            <div className="max-w-[400px] w-full">
+              <img
+                src="/mobile-login.png"
+                alt="Connect portfolio"
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
           </div>
         </div>
 
