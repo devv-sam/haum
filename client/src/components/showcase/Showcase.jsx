@@ -2,7 +2,6 @@
 import { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import EthIcon from "./EthIcon";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -29,7 +28,7 @@ const properties = [
   },
   {
     id: 3,
-    name: "Mountain Retreat",
+    name: "5 Bedroom Villa",
     description: "Chicago",
     image: "/houses.png",
     price: 189.2,
@@ -56,7 +55,7 @@ const PropertyCard = ({ property }) => {
   return (
     <div
       ref={cardRef}
-      className="bg-white rounded-2xl p-4 transition-all duration-300 cursor-pointer w-full group"
+      className="bg-white rounded-2xl transition-all duration-300 cursor-pointer w-full group"
     >
       <div className="aspect-square w-full h-[450px] mb-4 overflow-hidden rounded-xl">
         <img
@@ -77,9 +76,10 @@ const PropertyCard = ({ property }) => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <EthIcon className="w-4 h-4" />
-          <span className="font-mona_sans font-semibold">{property.price}</span>
+        <div>
+          <span className="font-mona_sans font-semibold">
+            {property.price} ETH
+          </span>
         </div>
       </div>
     </div>
@@ -115,39 +115,58 @@ const Showcase = () => {
 
   return (
     <div ref={showcaseRef} className="px-4 md:px-8 sm:px-6 lg:px-8 pt-20 pb-32">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="font-mona_sans text-2xl font-bold">Recently Listed</h2>
+      {/* Header section with navigation */}
+      <div className="relative mb-16">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
+          <div>
+            <h2 className="font-mona_sans text-2xl font-bold">
+              Recently Listed
+            </h2>
+          </div>
+          <div className="flex-1 md:text-right md:pr-28">
+            <p className="text-gray-600 text-sm">
+              The smart real estate marketplace with everything for everyone
+            </p>
+          </div>
         </div>
-        <p className="text-gray-600 text-sm">
-          The NFT marketplace with everything for everyone
-        </p>
+
+        {/* Navigation container outside of slider */}
+        <div className="navigation-container hidden md:flex absolute right-0 top-1/2 -translate-y-1/2">
+          <div className="custom-navigation-prev" />
+          <div className="custom-navigation-next" />
+        </div>
       </div>
 
-      <Swiper
-        modules={[Navigation, Pagination]}
-        spaceBetween={15}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-        }}
-        className="property-slider"
-      >
-        {properties.map((property) => (
-          <SwiperSlide key={property.id}>
-            <div className="property-card">
-              <PropertyCard property={property} />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Slider section */}
+      <div className="slider-container">
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={15}
+          slidesPerView={1}
+          navigation={{
+            prevEl: ".custom-navigation-prev",
+            nextEl: ".custom-navigation-next",
+          }}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 4,
+            },
+          }}
+          className="property-slider"
+        >
+          {properties.map((property) => (
+            <SwiperSlide key={property.id}>
+              <div className="property-card">
+                <PropertyCard property={property} />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };

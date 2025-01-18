@@ -2,6 +2,7 @@ import SearchBar from "../../components/searchBar/SearchBar";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import Showcase from "../../components/showcase/Showcase";
+import { Link } from "react-router-dom";
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
 
@@ -14,11 +15,25 @@ function HomePage() {
               Real Estate, Reinvented: Powered by Blockchain
             </h1>
           </div>
-          <div>
+          <div className="flex flex-col gap-4">
             <p className="text-lg md:text-xl text-gray-600 font-['Mona_Sans']">
-              Haum is a blockchain-powered platform that enables the buying,
-              selling, and fractional ownership of tokenized real estate.
+              Our blockchain-powered platform enables buying, selling, and
+              fractional ownership of tokenized real estate.
             </p>
+            <div className="flex flex-col md:flex-row gap-4">
+              <Link
+                to="/wallet"
+                className="w-full md:w-auto bg-blue-600 text-white px-6 py-4 rounded-full hover:bg-blue-700 font-['Mona_Sans'] transition-colors text-lg text-center"
+              >
+                Launch Wallet
+              </Link>
+              <Link
+                to="/how-it-works"
+                className="w-full md:w-auto bg-blue-100 text-blue-600 px-6 py-4 rounded-full hover:bg-blue-200 font-['Mona_Sans'] transition-colors text-lg text-center"
+              >
+                How it works
+              </Link>
+            </div>
           </div>
         </div>
 
