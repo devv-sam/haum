@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Navigate } from "react-router-dom";
+import Footer from "../../components/footer/Footer";
 function Layout() {
   const location = useLocation();
 
@@ -19,6 +20,9 @@ function Layout() {
       )}
       <div className="content">
         <Outlet />
+      </div>
+      <div className="footer">
+        <Footer />
       </div>
     </div>
   );

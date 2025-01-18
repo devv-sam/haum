@@ -109,7 +109,7 @@ function Register() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 sm:py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-[mona_sans] rounded-lg transition-colors duration-200 text-sm sm:text-base"
+              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-[mona_sans] rounded-lg transition-colors duration-200"
             >
               Create account
             </button>
