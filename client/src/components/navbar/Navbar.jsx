@@ -42,7 +42,6 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Marketplace", path: "/list" },
     { name: "How it works", path: "/how-it-works" },
-    { name: "About Us", path: "/about" },
   ];
 
   return (

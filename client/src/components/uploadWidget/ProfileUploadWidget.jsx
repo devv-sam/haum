@@ -1,6 +1,7 @@
 import { Camera } from "lucide-react";
 import BaseUploadWidget from "./BaseUploadWidget";
 
+// In ProfileImageUpload component
 const ProfileImageUpload = ({ uwConfig, setState, currentAvatar }) => {
   const { loaded, initializeCloudinaryWidget } = BaseUploadWidget({
     uwConfig: {
@@ -9,7 +10,7 @@ const ProfileImageUpload = ({ uwConfig, setState, currentAvatar }) => {
       maxFiles: 1,
     },
     onImageUpload: (imageUrl) => {
-      setState(imageUrl);
+      setState([imageUrl]); // Wrap the imageUrl in an array
     },
   });
 

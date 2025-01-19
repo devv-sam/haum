@@ -10,6 +10,8 @@ function ProfileUpdatePage() {
   const [avatar, setAvatar] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [firstName, lastName] = currentUser?.name?.split(" ") || ["", ""];
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,23 +22,30 @@ function ProfileUpdatePage() {
     const formData = new FormData(e.target);
     const updates = Object.fromEntries(formData);
 
-    // Concatenate first and last names
-    const fullName = `${updates.fname} ${updates.lname}`;
+    const cleanedUpdates = {
+      ...(updates.fname || updates.lname
+        ? {
+            name: `${updates.fname || firstName} ${
+              updates.lname || lastName
+            }`.trim(),
+          }
+        : {}),
 
-    // Only include fields that have been filled out
-    const cleanedUpdates = Object.entries(updates).reduce(
-      (acc, [key, value]) => {
-        if (value) {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      { name: fullName, avatar: avatar[0] }
-    );
+      ...(updates.username !== undefined && { username: updates.username }),
+      ...(updates.email !== undefined && { email: updates.email }),
+      ...(updates.password && { password: updates.password }),
+      ...(avatar.length > 0 && { avatar: avatar[0] }), // Ensure avatar is passed correctly
+    };
 
     try {
       if (!currentUser?.id) {
         throw new Error("No user ID found. Please log in again.");
+      }
+
+      if (Object.keys(cleanedUpdates).length === 0) {
+        setError("No changes detected");
+        setIsLoading(false);
+        return;
       }
 
       const res = await apiRequest.put(
@@ -45,7 +54,6 @@ function ProfileUpdatePage() {
       );
 
       if (res.data) {
-        // Merge the new data with existing user data
         const updatedUser = { ...currentUser, ...res.data };
         updateUser(updatedUser);
         navigate("/profile");
@@ -67,10 +75,7 @@ function ProfileUpdatePage() {
   if (!currentUser) {
     return <div>Please log in to update your profile.</div>;
   }
-  // Destructure first and last name from currentUser.name
-  const [firstName, lastName] = currentUser?.name
-    ? currentUser.name.split(" ")
-    : ["", ""];
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row items-center lg:items-start gap-8 p-8">
       {/* Form Section */}
@@ -103,7 +108,6 @@ function ProfileUpdatePage() {
               >
                 Last Name
               </label>
-
               <input
                 id="lname"
                 name="lname"
@@ -179,22 +183,26 @@ function ProfileUpdatePage() {
         <h2 className="text-xl font-bold text-gray-800 mb-4">
           Profile Picture
         </h2>
-        <img
-          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
-          alt="Profile avatar"
-          className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-        />
-        <ProfileImageUpload
-          uwConfig={{
-            cloudName: "dpwr2insh",
-            uploadPreset: "estate",
-            maxImageSize: 20000000,
-            folder: "avatars",
-          }}
-          setState={setAvatar}
-          currentAvatar={currentUser.avatar}
-        />
-        <p className="text-gray-600 text-sm mt-2">Max size: 20MB</p>
+        <div className="relative inline-block">
+          <img
+            src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
+            alt="Profile avatar"
+            className="w-32 h-32 rounded-full mb-4 object-cover"
+          />
+          <div className="absolute bottom-4 right-0">
+            <ProfileImageUpload
+              uwConfig={{
+                cloudName: "dpwr2insh",
+                uploadPreset: "estate",
+                maxImageSize: 2000000,
+                folder: "avatars",
+              }}
+              setState={setAvatar}
+              currentAvatar={currentUser.avatar}
+            />
+          </div>
+        </div>
+        <p className="text-gray-600 text-sm mt-2">Max size: 2MB</p>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import SplitType from "split-type";
 import SearchBar from "../../components/searchBar/SearchBar";
 import Showcase from "../../components/showcase/Showcase";
 import { Link } from "react-router-dom";
+import HomeHowItWorks from "../../components/HomeHowItWorks";
 
 gsap.registerPlugin(Flip);
 
@@ -125,6 +126,9 @@ function HomePage() {
       </div>
       <div className="px-4 md:px-8 sm:px-6 lg:px-8">
         <Showcase />
+      </div>
+      <div className="px-4 md:px-8 sm:px-6 lg:px-8">
+        <HomeHowItWorks />
       </div>
     </div>
   );
