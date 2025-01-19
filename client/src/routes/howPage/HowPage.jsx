@@ -19,7 +19,7 @@ const HowItWorks = () => {
         new SplitType(heading, { types: "words" });
       });
 
-      // Hero section parallax
+      // parallax
       gsap.from(".hero-content", {
         yPercent: 50,
         opacity: 0,
@@ -27,7 +27,7 @@ const HowItWorks = () => {
         ease: "power3.out",
       });
 
-      // Sections reveal animation
+      // reveal animation
       sectionsRef.current.forEach((section, index) => {
         const timeline = gsap.timeline({
           scrollTrigger: {
@@ -38,7 +38,6 @@ const HowItWorks = () => {
           },
         });
 
-        // Animate section number
         timeline.from(
           section.querySelector(".section-number"),
           {
@@ -108,7 +107,6 @@ const HowItWorks = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       <div className="px-4 md:px-8 sm:px-6 lg:px-8 pt-20 pb-32">
-        {/* Hero section with increased spacing */}
         <div className="hero-content grid md:grid-cols-2 gap-12 items-center mb-32 pt-20">
           <div>
             <h1 className="reveal-text text-4xl md:text-5xl font-['Mona_Sans'] font-medium leading-tight mb-8">
