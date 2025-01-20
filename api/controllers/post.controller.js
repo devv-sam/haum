@@ -184,4 +184,24 @@ const deletePost = async (req, res) => {
   }
 };
 
-export { getPosts, getPost, addPost, updatePost, deletePost };
+const unsavePost = async (req, res) => {
+  const { postId } = req.body;
+  const userId = req.userId;
+
+  try {
+    await prisma.savedPost.delete({
+      where: {
+        userId_postId: {
+          userId: userId,
+          postId: postId,
+        },
+      },
+    });
+    res.status(200).json({ message: "Post unsaved successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to unsave post" });
+  }
+};
+
+export { getPosts, getPost, addPost, updatePost, deletePost, unsavePost };

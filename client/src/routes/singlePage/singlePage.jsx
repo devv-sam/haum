@@ -21,17 +21,21 @@ function SinglePage() {
       year: "numeric",
     });
   };
-
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
+      return;
     }
-    setSaved((prev) => !prev);
+
+    const previousState = saved;
+    setSaved(!previousState);
+
     try {
-      await apiRequest.post("/users/save", { postId: post.id });
+      const endpoint = previousState ? "/users/unsave" : "/users/save";
+      await apiRequest.post(endpoint, { postId: post.id });
     } catch (error) {
       console.log(error);
-      setSaved((prev) => !prev);
+      setSaved(previousState);
     }
   };
 
@@ -94,7 +98,7 @@ function SinglePage() {
                       : "bg-blue-50 text-blue-600 hover:bg-blue-100"
                   }`}
                 >
-                  {saved ? "Bid Placed" : "Place a Bid"}
+                  {saved ? "Remove Bid" : "Place a Bid"}
                 </button>
               </div>
             </div>

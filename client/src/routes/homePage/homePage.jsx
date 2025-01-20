@@ -16,13 +16,11 @@ function HomePage() {
   const imageRef = useRef(null);
 
   useEffect(() => {
-    // Split text into characters, words, and lines
-    const splitHeading = new SplitType(headingRef.current, { types: "words" });
+    const splitHeading = new SplitType(headingRef.current, { types: "lines" });
     const splitParagraph = new SplitType(paragraphRef.current, {
       types: "lines",
     });
 
-    // Animate split text for heading
     gsap.from(splitHeading.words, {
       opacity: 0,
       y: 50,
@@ -31,7 +29,6 @@ function HomePage() {
       ease: "power3.out",
     });
 
-    // Animate lines for the paragraph
     gsap.from(splitParagraph.lines, {
       opacity: 0,
       y: 20,
@@ -41,23 +38,19 @@ function HomePage() {
       ease: "power3.out",
     });
 
-    // GSAP Flip animation for the image
     const ctx = gsap.context(() => {
       const flipState = Flip.getState(imageRef.current);
 
-      // Initially shrink the image container to simulate a slit
       gsap.set(imageContainerRef.current, {
         height: "0px",
         overflow: "hidden",
       });
 
-      // Expand to full height and reveal the image
       gsap.to(imageContainerRef.current, {
         height: "500px",
         duration: 1.2,
         ease: "power3.out",
         onComplete: () => {
-          // Animate the image in its final position with Flip
           Flip.from(flipState, {
             duration: 1.2,
             ease: "power3.out",
