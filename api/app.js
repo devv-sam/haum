@@ -12,7 +12,13 @@ const app = express();
 app.use(express.json());
 
 //middleware
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(
+  cors({
+    origin: ["https://haum.vercel.app"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 //cleanup task
 cron.schedule("0 * * * *", () => {
@@ -25,6 +31,7 @@ app.use("/api/posts", postRoute);
 app.use("/api/test", testRoute);
 app.use("/api/users", userRoute);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const PORT = process.env.PORT || 3000; // Use Render's assigned port
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
