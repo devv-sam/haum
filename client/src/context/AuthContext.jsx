@@ -5,22 +5,27 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
+    const savedToken = localStorage.getItem("token");
     console.log("Initial user from localStorage:", savedUser);
-    return JSON.parse(savedUser) || null;
+    return savedUser && savedToken ? JSON.parse(savedUser) : null;
   });
 
-  const updateUser = (data) => {
-    console.log("Updating user to:", data);
-    setCurrentUser(data);
+  const updateUser = (userData, token) => {
+    console.log("Updating user to:", userData);
+    setCurrentUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token); // Save token as well
   };
 
-  useEffect(() => {
-    console.log("Saving user to localStorage:", currentUser);
-    localStorage.setItem("user", JSON.stringify(currentUser));
-  }, [currentUser]);
+  const logoutUser = () => {
+    console.log("Logging out user");
+    setCurrentUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token"); // Remove token on logout
+  };
 
   return (
-    <AuthContext.Provider value={{ currentUser, updateUser }}>
+    <AuthContext.Provider value={{ currentUser, updateUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

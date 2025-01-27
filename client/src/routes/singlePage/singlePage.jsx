@@ -31,7 +31,7 @@ function SinglePage() {
     setSaved(!previousState);
 
     try {
-      const endpoint = previousState ? "/users/unsave" : "/users/save";
+      const endpoint = previousState ? "/api/users/unsave" : "/api/users/save";
       await apiRequest.post(endpoint, { postId: post.id });
     } catch (error) {
       console.log(error);

@@ -2,14 +2,14 @@ import axios from "axios";
 
 const apiRequest = axios.create({
   baseURL: "https://haum.onrender.com",
-  withCredentials: true,
+  withCredentials: true, // Ensures cookies are sent if needed
 });
 
 // Add request interceptor to inject auth token
 apiRequest.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user?.token) {
-    config.headers.Authorization = `Bearer ${user.token}`;
+  const token = localStorage.getItem("token"); // Get token directly
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
@@ -20,6 +20,7 @@ apiRequest.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("user");
+      localStorage.removeItem("token"); // Remove token on logout
       window.location.href = "/login";
     }
     return Promise.reject(error);
