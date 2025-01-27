@@ -45,11 +45,7 @@ function App() {
           path: "/register",
           element: <Register />,
         },
-        {
-          path: "/portfolio",
-          element: <Portfolio />,
-          loader: profilePageLoader,
-        },
+
         {
           path: "/how-it-works",
           element: <HowPage />,
@@ -71,6 +67,12 @@ function App() {
         {
           path: "/add",
           element: <NewPostPage />,
+        },
+        // Add portfolio here with the rest of protected routes
+        {
+          path: "/portfolio",
+          element: <Portfolio />,
+          loader: profilePageLoader,
         },
       ],
     },

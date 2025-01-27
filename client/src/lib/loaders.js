@@ -13,10 +13,21 @@ const listPageLoader = async ({ request, params }) => {
   });
 };
 const profilePageLoader = async () => {
-  const postPromise = apiRequest("/api/users/profilePosts");
-  return defer({
-    postResponse: postPromise,
-  });
+  try {
+    const postPromise = apiRequest("/api/users/profilePosts");
+    return defer({
+      postResponse: postPromise,
+    });
+  } catch (error) {
+    if (error.response?.status === 401) {
+      // If unauthorized, redirect to login
+      throw new Response("", {
+        status: 401,
+        statusText: "Unauthorized",
+      });
+    }
+    throw error;
+  }
 };
 
 export { singlePageLoader, listPageLoader, profilePageLoader };

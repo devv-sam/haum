@@ -29,7 +29,7 @@ const Card = ({ item }) => {
     setSaved((prev) => !prev);
 
     try {
-      const endpoint = saved ? "/users/unsave" : "/users/save";
+      const endpoint = saved ? "/api/users/unsave" : "/api/users/save";
       const response = await apiRequest.post(endpoint, {
         postId: item.id,
       });
