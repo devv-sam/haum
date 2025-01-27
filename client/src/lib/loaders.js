@@ -12,7 +12,7 @@ const listPageLoader = async ({ request, params }) => {
     postResponse: postPromise,
   });
 };
-const profilePageLoader = async () => {
+const portfolioLoader = async () => {
   try {
     const postPromise = apiRequest("/api/users/profilePosts");
     return defer({
@@ -20,7 +20,6 @@ const profilePageLoader = async () => {
     });
   } catch (error) {
     if (error.response?.status === 401) {
-      // If unauthorized, redirect to login
       throw new Response("", {
         status: 401,
         statusText: "Unauthorized",
@@ -30,4 +29,4 @@ const profilePageLoader = async () => {
   }
 };
 
-export { singlePageLoader, listPageLoader, profilePageLoader };
+export { singlePageLoader, listPageLoader, portfolioLoader };

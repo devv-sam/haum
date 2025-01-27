@@ -13,7 +13,7 @@ import NewPostPage from "./routes/newPostPage/newPostPage";
 import HowPage from "./routes/howPage/HowPage";
 import {
   listPageLoader,
-  profilePageLoader,
+  portfolioLoader,
   singlePageLoader,
 } from "./lib/loaders";
 function App() {
@@ -59,7 +59,6 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
-          loader: profilePageLoader,
         },
         {
           path: "/profile/update",
@@ -69,11 +68,10 @@ function App() {
           path: "/add",
           element: <NewPostPage />,
         },
-        // Add portfolio here with the rest of protected routes
         {
           path: "/portfolio",
           element: <Portfolio />,
-          loader: profilePageLoader,
+          loader: portfolioLoader,
         },
       ],
     },
