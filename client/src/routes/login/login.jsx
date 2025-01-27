@@ -19,7 +19,10 @@ function Login() {
     const username = formData.get("username");
     const password = formData.get("password");
     try {
-      const res = await apiRequest.post("/auth/login", { username, password });
+      const res = await apiRequest.post("/api/auth/login", {
+        username,
+        password,
+      });
       updateUser(res.data);
       navigate("/profile");
     } catch (error) {

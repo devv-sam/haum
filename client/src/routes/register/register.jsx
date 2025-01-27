@@ -20,7 +20,7 @@ function Register() {
     const password = e.target.password.value;
 
     try {
-      await apiRequest.post("/auth/register", {
+      await apiRequest.post("/api/auth/register", {
         name,
         username,
         email,
