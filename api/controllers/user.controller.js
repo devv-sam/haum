@@ -140,7 +140,8 @@ export const unsavePost = async (req, res) => {
 };
 
 export const profilePosts = async (req, res) => {
-  const tokenUserId = req.userId;
+  const tokenUserId = req.userId; // userId is extracted from the token
+
   try {
     const userPosts = await prisma.post.findMany({
       where: { userId: tokenUserId },
@@ -153,6 +154,7 @@ export const profilePosts = async (req, res) => {
         },
       },
     });
+
     const saved = await prisma.savedPost.findMany({
       where: { userId: tokenUserId },
       include: {
