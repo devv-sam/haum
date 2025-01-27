@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Flip } from "gsap/Flip";
-import SplitType from "split-type";
 import SearchBar from "../../components/searchBar/SearchBar";
 import Showcase from "../../components/showcase/Showcase";
 import { Link } from "react-router-dom";
@@ -16,51 +15,50 @@ function HomePage() {
   const imageRef = useRef(null);
 
   useEffect(() => {
-    const splitHeading = new SplitType(headingRef.current, { types: "lines" });
-    const splitParagraph = new SplitType(paragraphRef.current, {
-      types: "lines",
+    // Set initial states
+    gsap.set([headingRef.current, paragraphRef.current], {
+      opacity: 0,
+      y: 30,
     });
 
-    gsap.from(splitHeading.words, {
-      opacity: 0,
-      y: 50,
-      stagger: 0.1,
+    // Create a timeline for better control
+    const tl = gsap.timeline();
+
+    // Add animations to timeline
+    tl.to(headingRef.current, {
+      opacity: 1,
+      y: 0,
       duration: 1,
       ease: "power3.out",
-    });
+    }).to(
+      paragraphRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+      },
+      "-=0.7"
+    ); // Start slightly before the first animation ends
 
-    gsap.from(splitParagraph.lines, {
-      opacity: 0,
-      y: 20,
-      stagger: 0.2,
-      duration: 1,
-      delay: 0.5,
-      ease: "power3.out",
-    });
-
+    // Image animation in separate context
     const ctx = gsap.context(() => {
-      const flipState = Flip.getState(imageRef.current);
-
       gsap.set(imageContainerRef.current, {
         height: "0px",
-        overflow: "hidden",
       });
 
       gsap.to(imageContainerRef.current, {
         height: "500px",
         duration: 1.2,
         ease: "power3.out",
-        onComplete: () => {
-          Flip.from(flipState, {
-            duration: 1.2,
-            ease: "power3.out",
-          });
-        },
       });
     });
 
     // Cleanup
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      tl.kill();
+    };
   }, []);
 
   return (
@@ -70,7 +68,7 @@ function HomePage() {
           <div>
             <h1
               ref={headingRef}
-              className="text-4xl md:text-5xl font-['Mona_Sans'] font-medium leading-tight mb-8"
+              className="text-4xl md:text-5xl font-['Mona_Sans'] font-medium leading-tight mb-8 opacity-0"
             >
               Real Estate, Reinvented: Powered by Blockchain
             </h1>
@@ -78,7 +76,7 @@ function HomePage() {
           <div className="flex flex-col gap-4">
             <p
               ref={paragraphRef}
-              className="text-lg md:text-xl text-gray-600 font-['Mona_Sans']"
+              className="text-lg md:text-xl text-gray-600 font-['Mona_Sans'] opacity-0"
             >
               Our blockchain-powered platform enables buying, selling, and
               fractional ownership of tokenized real estate.

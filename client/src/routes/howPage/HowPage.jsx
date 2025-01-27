@@ -13,7 +13,6 @@ const HowItWorks = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Split text for animations
       const headings = document.querySelectorAll(".reveal-text");
       headings.forEach((heading) => {
         new SplitType(heading, { types: "words" });
