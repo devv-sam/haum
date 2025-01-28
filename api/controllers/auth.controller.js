@@ -61,7 +61,7 @@ const login = async (req, res) => {
         maxAge: age,
       })
       .status(200)
-      .json({ token, user: userInfo }); // Include token in response!
+      .json({ token, user: userInfo });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });

@@ -14,19 +14,25 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    const formData = new FormData(e.target);
 
+    const formData = new FormData(e.target);
     const username = formData.get("username");
     const password = formData.get("password");
+
     try {
       const res = await apiRequest.post("/api/auth/login", {
         username,
         password,
       });
-      updateUser(res.data);
+
+      // ✅ Store token separately
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      updateUser(res.data.user); // ✅ Pass only user data (not token)
       navigate("/profile");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response?.data?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
