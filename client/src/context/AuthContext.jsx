@@ -6,14 +6,15 @@ export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
     const savedData = JSON.parse(localStorage.getItem("user"));
     console.log("Initial data from localStorage:", savedData);
-    return savedData?.user || null;
+    return savedData || null; // Ensure it's just the user object
   });
 
   const updateUser = (userData, token) => {
-    const storedData = { user: userData, token }; // Store token too
+    console.log("Updating user:", userData);
     setCurrentUser(userData);
-    localStorage.setItem("user", JSON.stringify(storedData));
-    localStorage.setItem("token", token); // Store token separately
+
+    localStorage.setItem("user", JSON.stringify(userData)); // Save only user details
+    localStorage.setItem("token", token); // Save token separately
   };
 
   const logoutUser = () => {
