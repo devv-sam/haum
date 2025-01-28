@@ -57,13 +57,12 @@ const login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        // secure: true, // Uncomment in production (for HTTPS)
         maxAge: age,
       })
       .status(200)
-      .json({ token, user: userInfo });
-  } catch (err) {
-    console.log(err);
+      .json({ userInfo });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Failed to login!" });
   }
 };

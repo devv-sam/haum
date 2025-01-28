@@ -1,13 +1,10 @@
-import { Suspense, useContext } from "react";
+import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import List from "../../components/list/List";
 import { PlusCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 function Portfolio() {
-  const { currentUser } = useContext(AuthContext);
   const data = useLoaderData();
-  console.log("Portfolio render - currentUser:", currentUser);
 
   return (
     <>

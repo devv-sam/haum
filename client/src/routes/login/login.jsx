@@ -25,12 +25,8 @@ function Login() {
         password,
       });
 
-      // ✅ Store token separately
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      updateUser(res.data.user); // ✅ Pass only user data (not token)
-      navigate("/profile");
+      updateUser(res.data);
+      navigate("/");
     } catch (error) {
       setError(error.response?.data?.message || "Login failed");
     } finally {
