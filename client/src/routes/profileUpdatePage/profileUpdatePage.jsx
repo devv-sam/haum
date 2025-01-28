@@ -49,7 +49,7 @@ function ProfileUpdatePage() {
       }
 
       const res = await apiRequest.put(
-        `/users/${currentUser.id}`,
+        `/api/users/${currentUser.id}`,
         cleanedUpdates
       );
 
