@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiRequest = axios.create({
   baseURL: "https://haum.onrender.com",
-  withCredentials: true,
+  withCredentials: true, // Ensures cookies are sent if needed
 });
 
 // Add request interceptor to inject auth token
