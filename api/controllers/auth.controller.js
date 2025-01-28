@@ -34,12 +34,15 @@ const login = async (req, res) => {
       where: { username },
     });
 
-    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid Credentials!" });
+    }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid)
+    if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid Credentials!" });
+    }
 
     const age = 1000 * 60 * 60 * 24 * 7;
 
@@ -61,10 +64,7 @@ const login = async (req, res) => {
         maxAge: age,
       })
       .status(200)
-      .json(userInfo);
-
-    // Store the token in localStorage
-    localStorage.setItem("token", token); // Add this line
+      .json({ ...userInfo, token }); // Return the token to the client
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to login!" });

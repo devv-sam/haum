@@ -18,11 +18,14 @@ function Login() {
 
     const username = formData.get("username");
     const password = formData.get("password");
+
     try {
       const res = await apiRequest.post("/api/auth/login", {
         username,
         password,
       });
+      localStorage.setItem("token", res.data.token);
+
       updateUser(res.data);
       navigate("/");
     } catch (error) {
