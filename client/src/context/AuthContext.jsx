@@ -12,12 +12,11 @@ export const AuthContextProvider = ({ children }) => {
   // Update user and token
   const updateUser = (userData, token) => {
     console.log("Updating user to:", userData);
-    console.log("Storing token:", token);
 
     // Store user data and token separately
     setCurrentUser(userData);
     localStorage.setItem("user", JSON.stringify(userData)); // Store user data
-    localStorage.setItem("token", token); // Store token separately
+    localStorage.setItem("token", token);
   };
 
   // Logout user

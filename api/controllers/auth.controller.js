@@ -26,44 +26,52 @@ const register = async (req, res) => {
   }
 };
 
-// Function to generate a token
-const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET_KEY, {
-    expiresIn: "1d", // Token expires in 1 day
-  });
-};
-
-// Login controller
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    // Find user by email using Prisma
+    // CHECK IF THE USER EXISTS
+
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { username },
     });
 
-    // Check if user exists and password is correct
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
-    // Generate token with userId in the payload
-    const token = generateToken(user.id);
+    // CHECK IF THE PASSWORD IS CORRECT
 
-    // Send user data and token to the frontend
-    res.status(200).json({
-      user: {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid)
+      return res.status(400).json({ message: "Invalid Credentials!" });
+
+    // GENERATE COOKIE TOKEN AND SEND TO THE USER
+
+    // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
+    const age = 1000 * 60 * 60 * 24 * 7;
+
+    const token = jwt.sign(
+      {
         id: user.id,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
+        isAdmin: false,
       },
-      token, // Send the token to the frontend
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Internal server error" });
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
+    );
+
+    const { password: userPassword, ...userInfo } = user;
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        // secure:true,
+        maxAge: age,
+      })
+      .status(200)
+      .json(userInfo);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to login!" });
   }
 };
 
