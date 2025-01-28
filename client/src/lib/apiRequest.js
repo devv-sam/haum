@@ -8,9 +8,10 @@ const apiRequest = axios.create({
 // Add a request interceptor to include the token in the headers
 apiRequest.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    console.log("Token:", token); // Debugging line
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`; // Include the token in the headers
     }
     return config;
   },

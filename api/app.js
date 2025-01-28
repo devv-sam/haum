@@ -11,12 +11,10 @@ const app = express();
 
 app.use(express.json());
 
-//middleware
 app.use(
   cors({
-    origin: ["https://haum.vercel.app"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://haum.vercel.app", // Allow requests from this origin
+    credentials: true, // Allow cookies to be sent
   })
 );
 
