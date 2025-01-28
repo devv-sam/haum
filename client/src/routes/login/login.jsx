@@ -14,26 +14,23 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
     const formData = new FormData(e.target);
+
     const username = formData.get("username");
     const password = formData.get("password");
-
     try {
       const res = await apiRequest.post("/api/auth/login", {
         username,
         password,
       });
-
       updateUser(res.data);
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed");
+      setError(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Left side: Background Image */}
