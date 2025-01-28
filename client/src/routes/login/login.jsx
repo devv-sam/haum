@@ -24,12 +24,22 @@ function Login() {
         username,
         password,
       });
-      localStorage.setItem("token", res.data.token);
 
-      updateUser(res.data);
+      // Extract the token and user data from the response
+      const { token, ...userData } = res.data;
+
+      // Store the token in localStorage
+      localStorage.setItem("token", token);
+
+      // Update the user state
+      updateUser(userData);
+
+      // Navigate to the home page
       navigate("/");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(
+        error.response?.data?.message || "An error occurred during login."
+      );
     } finally {
       setIsLoading(false);
     }
