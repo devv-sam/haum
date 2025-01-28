@@ -34,7 +34,7 @@ function ProfileUpdatePage() {
       ...(updates.username !== undefined && { username: updates.username }),
       ...(updates.email !== undefined && { email: updates.email }),
       ...(updates.password && { password: updates.password }),
-      ...(avatar.length > 0 && { avatar: avatar[0] }), // Ensure avatar is passed correctly
+      ...(avatar.length > 0 && { avatar: avatar[0] }),
     };
 
     try {
@@ -49,7 +49,7 @@ function ProfileUpdatePage() {
       }
 
       const res = await apiRequest.put(
-        `/users/${currentUser.id}`,
+        `/api/users/${currentUser.id}`,
         cleanedUpdates
       );
 
