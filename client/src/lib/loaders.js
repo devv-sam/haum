@@ -13,20 +13,10 @@ const listPageLoader = async ({ request, params }) => {
   });
 };
 const portfolioLoader = async () => {
-  try {
-    const postPromise = apiRequest("/users/profilePosts");
-    return defer({
-      postResponse: postPromise,
-    });
-  } catch (error) {
-    if (error.response?.status === 401) {
-      throw new Response("", {
-        status: 401,
-        statusText: "Unauthorized",
-      });
-    }
-    throw error;
-  }
+  const postPromise = apiRequest("/api/users/profilePosts");
+  return defer({
+    postResponse: postPromise,
+  });
 };
 
 export { singlePageLoader, listPageLoader, portfolioLoader };
