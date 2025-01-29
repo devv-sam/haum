@@ -14,7 +14,7 @@ const listPageLoader = async ({ request, params }) => {
 };
 const portfolioLoader = async () => {
   try {
-    const postPromise = apiRequest("users/profilePosts");
+    const postPromise = apiRequest("/users/profilePosts");
     return defer({
       postResponse: postPromise,
     });
