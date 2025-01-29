@@ -5,7 +5,6 @@ import { PlusCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 function Portfolio() {
   const data = useLoaderData();
-
   return (
     <>
       {/* Saved List Section */}

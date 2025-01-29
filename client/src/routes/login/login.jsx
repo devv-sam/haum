@@ -20,16 +20,17 @@ function Login() {
     const password = formData.get("password");
 
     try {
-      const res = await apiRequest.post("/api/auth/login", {
-        username,
-        password,
-      });
+      const res = await apiRequest.post(
+        "/api/auth/login",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true } // Ensure cookies are sent and received
+      );
 
-      // Extract the token and user data from the response
-      const { token, ...userData } = res.data;
-
-      // Store the token in localStorage
-      localStorage.setItem("token", token);
+      // Extract user data from the response (token is in cookies, not in response body)
+      const { password: userPassword, ...userData } = res.data;
 
       // Update the user state
       updateUser(userData);
