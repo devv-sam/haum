@@ -11,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 
+// check cors configuration to see if it's causing the issue  https://vercel.com/guides/how-to-enable-cors
 app.use(
   cors({
     origin: "https://haum.vercel.app", // Allow requests from this origin
