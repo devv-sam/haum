@@ -52,7 +52,7 @@ Haum is a mock crypto-integrated real estate platform built using the MERN stack
 
 
 ## Screenshots
-https://devvsam.vercel.app/assets/mobilemockup.png
+https://github.com/devv-sam/Portfolio/blob/main/public/assets/haummain.png?raw=true 
 
 ## License
 This project is for learning purposes and is not intended for commercial use.
